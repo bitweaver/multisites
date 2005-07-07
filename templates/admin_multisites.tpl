@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/bitweaver/_bit_multisites/templates/admin_multisites.tpl,v 1.1 2005/06/24 19:56:30 bitweaver Exp $ *}
+{* $Header: /cvsroot/bitweaver/_bit_multisites/templates/admin_multisites.tpl,v 1.2 2005/07/07 02:49:15 tinjaw Exp $ *}
 {strip}
 {form}
 	{jstabs}
@@ -14,7 +14,7 @@
 					{formlabel label="Server Name" for="server_name"}
 					{forminput}
 						<input type="text" id="server_name" name="server_name" size="54" value="{$editSite.server_name}" />
-						{formhelp note="Enter the server name you wish to use for multi-homin here. An example would be <strong>www.bitweaver.org</strong>."}
+						{formhelp note="Enter the server name you wish to use for multi-homing here. An example would be <strong>www.bitweaver.org</strong>."}
 					{/forminput}
 				</div>
 
