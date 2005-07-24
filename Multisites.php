@@ -1,15 +1,15 @@
 <?php
 /**
-* $Header: /cvsroot/bitweaver/_bit_multisites/Multisites.php,v 1.1 2005/06/24 19:56:29 bitweaver Exp $
+* $Header: /cvsroot/bitweaver/_bit_multisites/Multisites.php,v 1.1.1.1.2.1 2005/07/24 09:27:22 lsces Exp $
 */
 
 /**
-* $Id: Multisites.php,v 1.1 2005/06/24 19:56:29 bitweaver Exp $
+* $Id: Multisites.php,v 1.1.1.1.2.1 2005/07/24 09:27:22 lsces Exp $
 *
 * Multisites is a package that allows multi-homing for bitweaver
 *
 * @author   xing <xing@synapse.plus.com>
-* @version  $Revision: 1.1 $
+* @version  $Revision: 1.1.1.1.2.1 $
 * @package  multisites
 */
 
@@ -37,13 +37,15 @@ class Multisites extends BitBase {
 			$res = $result->fetchRow();
 			$this->mMultisiteId = $res['multisite_id'];
 			$this->mInfo = $res;
-		}
-
-		$query = "SELECT * FROM `".BIT_DB_PREFIX."tiki_multisite_preferences` WHERE `multisite_id`=?";
-		$result = $this->query( $query, array( $this->mMultisiteId ) );
-		if( !empty( $result ) ) {
-			while( $res = $result->fetchRow() ) {
-				$this->mPrefs[$res['name']] = $res['value'];
+		} 
+		
+		if ( !empty( $this->mMultisiteId ) ) {
+			$query = "SELECT * FROM `".BIT_DB_PREFIX."tiki_multisite_preferences` WHERE `multisite_id`=?";
+			$result = $this->query( $query, array( $this->mMultisiteId ) );
+			if( !empty( $result ) ) {
+				while( $res = $result->fetchRow() ) {
+					$this->mPrefs[$res['name']] = $res['value'];
+				}
 			}
 		}
 		return( count( $this->mInfo ) );
