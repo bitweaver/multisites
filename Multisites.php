@@ -1,15 +1,11 @@
 <?php
 /**
-* $Header: /cvsroot/bitweaver/_bit_multisites/Multisites.php,v 1.1.1.1.2.1 2005/07/24 09:27:22 lsces Exp $
-*/
-
-/**
-* $Id: Multisites.php,v 1.1.1.1.2.1 2005/07/24 09:27:22 lsces Exp $
+* $Header: /cvsroot/bitweaver/_bit_multisites/Multisites.php,v 1.1.1.1.2.2 2005/08/01 21:12:29 lsces Exp $
 *
 * Multisites is a package that allows multi-homing for bitweaver
 *
 * @author   xing <xing@synapse.plus.com>
-* @version  $Revision: 1.1.1.1.2.1 $
+* @version  $Revision: 1.1.1.1.2.2 $
 * @package  multisites
 */
 
