@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/bitweaver/_bit_multisites/templates/admin_multisites.tpl,v 1.2 2005/07/07 02:49:15 tinjaw Exp $ *}
+{* $Header: /cvsroot/bitweaver/_bit_multisites/templates/admin_multisites.tpl,v 1.3 2005/08/01 18:41:11 squareing Exp $ *}
 {strip}
 {form}
 	{jstabs}
@@ -13,7 +13,7 @@
 				<div class="row">
 					{formlabel label="Server Name" for="server_name"}
 					{forminput}
-						<input type="text" id="server_name" name="server_name" size="54" value="{$editSite.server_name}" />
+						<input type="text" id="server_name" name="server_name" size="50" value="{$editSite.server_name}" />
 						{formhelp note="Enter the server name you wish to use for multi-homing here. An example would be <strong>www.bitweaver.org</strong>."}
 					{/forminput}
 				</div>
@@ -33,21 +33,21 @@
 				<div class="row">
 					{formlabel label="Site Title" for="site_title"}
 					{forminput}
-						<input type="text" id="site_title" name="server_prefs[siteTitle]" size="54" value="{$editSite.prefs.siteTitle|escape}" />
+						<input type="text" id="site_title" name="server_prefs[siteTitle]" size="50" value="{$editSite.prefs.siteTitle|escape}" />
 					{/forminput}
 				</div>
 
 				<div class="row">
 					{formlabel label="Site Slogan" for="site_slogan"}
 					{forminput}
-						<input type="text" id="site_slogan" name="server_prefs[site_slogan]" size="54" value="{$editSite.prefs.site_slogan|escape}" />
+						<input type="text" id="site_slogan" name="server_prefs[site_slogan]" size="50" value="{$editSite.prefs.site_slogan|escape}" />
 					{/forminput}
 				</div>
 
 				<div class="row">
 					{formlabel label="Site Description" for="site_description"}
 					{forminput}
-						<input size="54" type="text" name="server_prefs[site_description]" id="site_description" maxlength="180" value="{$editSite.prefs.site_description|escape}" />
+						<input size="50" type="text" name="server_prefs[site_description]" id="site_description" maxlength="180" value="{$editSite.prefs.site_description|escape}" />
 					{/forminput}
 				</div>
 
@@ -79,7 +79,7 @@
 				<div class="row">
 					{formlabel label="URI for custom home" for="urlIndex"}
 					{forminput}
-						<input type="text" id="urlIndex" name="server_prefs[urlIndex]" value="{$editSite.prefs.urlIndex|escape}" size="54" />
+						<input type="text" id="urlIndex" name="server_prefs[urlIndex]" value="{$editSite.prefs.urlIndex|escape}" size="50" />
 					{/forminput}
 				</div>
 			{/legend}
