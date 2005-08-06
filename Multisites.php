@@ -3,7 +3,7 @@
 * Multisites is a package that allows multi-homing for bitweaver
 *
 * @package  multisites
-* @version $Header: /cvsroot/bitweaver/_bit_multisites/Multisites.php,v 1.1.1.1.2.3 2005/08/03 16:54:00 lsces Exp $
+* @version $Header: /cvsroot/bitweaver/_bit_multisites/Multisites.php,v 1.1.1.1.2.4 2005/08/06 18:31:30 lsces Exp $
 * @author   xing <xing@synapse.plus.com>
 */
 
@@ -86,7 +86,7 @@ class Multisites extends BitBase {
 	**/
 	function store( &$pParamHash ) {
 		if( $this->verify($pParamHash ) ) {
-			$this->mDb->StartTrans();
+			$this->StartTrans();
 			if( !empty( $pParamHash['multisite_id'] ) ) {
 				$msId = array ( "name" => "multisite_id", "value" => $pParamHash['multisite_id'] );
 				$result = $this->associateUpdate( BIT_DB_PREFIX."tiki_multisites", $pParamHash['server_store'], $msId );
@@ -102,7 +102,7 @@ class Multisites extends BitBase {
 					$result = $this->associateInsert( BIT_DB_PREFIX."tiki_multisite_preferences", $pref );
 				}
 			}
-			$this->mDb->CompleteTrans();
+			$this->CompleteTrans();
 			$this->load();
 		} else {
 			$this->mErrors[] = "There was a problem trying to save the settings.";
