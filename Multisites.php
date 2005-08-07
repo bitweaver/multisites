@@ -1,18 +1,17 @@
 <?php
 /**
-* $Header: /cvsroot/bitweaver/_bit_multisites/Multisites.php,v 1.2 2005/07/25 20:02:16 squareing Exp $
+* Multisites is a package that allows multi-homing for bitweaver
+*
+* @package  multisites
+* @version $Header: /cvsroot/bitweaver/_bit_multisites/Multisites.php,v 1.3 2005/08/07 17:41:48 squareing Exp $
+* @author   xing <xing@synapse.plus.com>
 */
 
 /**
-* $Id: Multisites.php,v 1.2 2005/07/25 20:02:16 squareing Exp $
-*
-* Multisites is a package that allows multi-homing for bitweaver
-*
-* @author   xing <xing@synapse.plus.com>
-* @version  $Revision: 1.2 $
-* @package  multisites
-*/
-
+ * Multisite Management
+ *
+ * @package  multisites
+ */
 class Multisites extends BitBase {
 	/**
 	* id of the currently active domain
@@ -32,7 +31,7 @@ class Multisites extends BitBase {
 	**/
 	function load() {
 		$query = "SELECT * FROM `".BIT_DB_PREFIX."tiki_multisites` WHERE `server_name`=?";
-		$result = $this->query( $query, array( $_SERVER['SERVER_NAME'] ) );
+		$result = $this->mDb->query( $query, array( $_SERVER['SERVER_NAME'] ) );
 		if( !empty( $result ) ) {
 			$res = $result->fetchRow();
 			$this->mMultisiteId = $res['multisite_id'];
@@ -41,7 +40,7 @@ class Multisites extends BitBase {
 		
 		if ( !empty( $this->mMultisiteId ) ) {
 			$query = "SELECT * FROM `".BIT_DB_PREFIX."tiki_multisite_preferences` WHERE `multisite_id`=?";
-			$result = $this->query( $query, array( $this->mMultisiteId ) );
+			$result = $this->mDb->query( $query, array( $this->mMultisiteId ) );
 			if( !empty( $result ) ) {
 				while( $res = $result->fetchRow() ) {
 					$this->mPrefs[$res['name']] = $res['value'];
@@ -64,13 +63,13 @@ class Multisites extends BitBase {
 		}
 
 		$query = "SELECT * FROM `".BIT_DB_PREFIX."tiki_multisites`".$where;
-		$result = $this->query( $query, $bindvals );
+		$result = $this->mDb->query( $query, $bindvals );
 		while( $res = $result->fetchRow() ) {
 			$ret[$res['multisite_id']] = $res;
 		}
 
 		$query = "SELECT * FROM `".BIT_DB_PREFIX."tiki_multisite_preferences`".$where;
-		$result = $this->query( $query, $bindvals );
+		$result = $this->mDb->query( $query, $bindvals );
 		while( $res = $result->fetchRow() ) {
 			$ret[$res['multisite_id']]['prefs'][$res['name']] = $res['value'];
 		}
@@ -90,21 +89,21 @@ class Multisites extends BitBase {
 			$this->mDb->StartTrans();
 			if( !empty( $pParamHash['multisite_id'] ) ) {
 				$msId = array ( "name" => "multisite_id", "value" => $pParamHash['multisite_id'] );
-				$result = $this->associateUpdate( BIT_DB_PREFIX."tiki_multisites", $pParamHash['server_store'], $msId );
+				$result = $this->mDb->associateUpdate( BIT_DB_PREFIX."tiki_multisites", $pParamHash['server_store'], $msId );
 				$this->expungePreferences( $pParamHash['multisite_id'] );
 				foreach( $pParamHash['prefs_store'] as $pref ) {
-					$result = $this->associateInsert( BIT_DB_PREFIX."tiki_multisite_preferences", $pref );
+					$result = $this->mDb->associateInsert( BIT_DB_PREFIX."tiki_multisite_preferences", $pref );
 				}
 			} else {
-				$result = $this->associateInsert( BIT_DB_PREFIX."tiki_multisites", $pParamHash['server_store'] );
-				$msId = $this->getOne( "SELECT MAX(`multisite_id`) FROM `".BIT_DB_PREFIX."tiki_multisites`" );
+				$result = $this->mDb->associateInsert( BIT_DB_PREFIX."tiki_multisites", $pParamHash['server_store'] );
+				$msId = $this->mDb->getOne( "SELECT MAX(`multisite_id`) FROM `".BIT_DB_PREFIX."tiki_multisites`" );
 				foreach( $pParamHash['prefs_store'] as $pref ) {
 					$pref['multisite_id'] = $msId;
-					$result = $this->associateInsert( BIT_DB_PREFIX."tiki_multisite_preferences", $pref );
+					$result = $this->mDb->associateInsert( BIT_DB_PREFIX."tiki_multisite_preferences", $pref );
 				}
 			}
-			$this->mDb->CompleteTrans();
 			$this->load();
+			$this->mDb->CompleteTrans();
 		} else {
 			$this->mErrors[] = "There was a problem trying to save the settings.";
 		}
@@ -125,7 +124,7 @@ class Multisites extends BitBase {
 
 		if( !empty( $pParamHash['server_name'] ) ) {
 			$query = "SELECT * FROM `".BIT_DB_PREFIX."tiki_multisites` WHERE `server_name`=?";
-			$result = $this->query( $query, array( trim( $pParamHash['server_name'] ) ) );
+			$result = $this->mDb->query( $query, array( trim( $pParamHash['server_name'] ) ) );
 			$site = $result->fetchRow();
 			if( empty( $site ) || ( $site['multisite_id'] == $pParamHash['multisite_id'] ) ) {
 				$pParamHash['server_store']['server_name'] = trim( $pParamHash['server_name'] );
@@ -166,7 +165,7 @@ class Multisites extends BitBase {
 		$ret = FALSE;
 		if( !empty( $pMultisiteId ) && is_numeric( $pMultisiteId ) ) {
 			$query = "DELETE FROM `".BIT_DB_PREFIX."tiki_multisites` WHERE `multisite_id` = ?";
-			$ret = $this->query( $query, array( $pMultisiteId ) );
+			$ret = $this->mDb->query( $query, array( $pMultisiteId ) );
 			$this->expungePreferences( $pMultisiteId );
 		}
 		return $ret;
@@ -182,7 +181,7 @@ class Multisites extends BitBase {
 		$ret = FALSE;
 		if( !empty( $pMultisiteId ) && is_numeric( $pMultisiteId ) ) {
 			$query = "DELETE FROM `".BIT_DB_PREFIX."tiki_multisite_preferences` WHERE `multisite_id` = ?";
-			$ret = $this->query( $query, array( $pMultisiteId ) );
+			$ret = $this->mDb->query( $query, array( $pMultisiteId ) );
 		}
 		return $ret;
 	}
