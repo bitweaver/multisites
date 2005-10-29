@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/bitweaver/_bit_multisites/templates/admin_multisites.tpl,v 1.1.1.1.2.2 2005/07/15 21:26:22 squareing Exp $ *}
+{* $Header: /cvsroot/bitweaver/_bit_multisites/templates/admin_multisites.tpl,v 1.1.1.1.2.3 2005/10/29 11:45:03 squareing Exp $ *}
 {strip}
 {form}
 	{jstabs}
@@ -21,7 +21,7 @@
 				<div class="row">
 					{formlabel label="Description" for="description"}
 					{forminput}
-						<textarea cols="80" rows="3" name="description" id="description">{$editSite.description}</textarea>
+						<textarea cols="50" rows="3" name="description" id="description">{$editSite.description}</textarea>
 						{formhelp note="Enter a brief description what this server name is intended for. The description is for your own reference."}
 					{/forminput}
 				</div>
@@ -54,7 +54,7 @@
 				<div class="row">
 					{formlabel label="Site Keywords" for="site_keywords"}
 					{forminput}
-						<textarea cols="80" rows="5" name="server_prefs[site_keywords]" id="site_keywords">{$editSite.prefs.site_keywords|escape}</textarea>
+						<textarea cols="50" rows="5" name="server_prefs[site_keywords]" id="site_keywords">{$editSite.prefs.site_keywords|escape}</textarea>
 					{/forminput}
 				</div>
 
