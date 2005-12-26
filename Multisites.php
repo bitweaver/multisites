@@ -3,7 +3,7 @@
 * Multisites is a package that allows multi-homing for bitweaver
 *
 * @package  multisites
-* @version $Header: /cvsroot/bitweaver/_bit_multisites/Multisites.php,v 1.3 2005/08/07 17:41:48 squareing Exp $
+* @version $Header: /cvsroot/bitweaver/_bit_multisites/Multisites.php,v 1.4 2005/12/26 12:25:15 squareing Exp $
 * @author   xing <xing@synapse.plus.com>
 */
 
@@ -38,7 +38,7 @@ class Multisites extends BitBase {
 			$this->mInfo = $res;
 		} 
 		
-		if ( !empty( $this->mMultisiteId ) ) {
+		if ( @BitBase::verifyId( $this->mMultisiteId ) ) {
 			$query = "SELECT * FROM `".BIT_DB_PREFIX."tiki_multisite_preferences` WHERE `multisite_id`=?";
 			$result = $this->mDb->query( $query, array( $this->mMultisiteId ) );
 			if( !empty( $result ) ) {
@@ -57,7 +57,7 @@ class Multisites extends BitBase {
 	function getMultisites( $pMultisiteId=NULL ) {
 		$where = '';
 		$bindvals = array();
-		if( !empty( $pMultisiteId ) && is_numeric( $pMultisiteId ) ) {
+		if( @BitBase::verifyId( $pMultisiteId ) ) {
 			$where = " WHERE `multisite_id`=?";
 			$bindvals[] = $pMultisiteId;
 		}
@@ -87,7 +87,7 @@ class Multisites extends BitBase {
 	function store( &$pParamHash ) {
 		if( $this->verify($pParamHash ) ) {
 			$this->mDb->StartTrans();
-			if( !empty( $pParamHash['multisite_id'] ) ) {
+			if( @BitBase::verifyId( $pParamHash['multisite_id'] ) ) {
 				$msId = array ( "name" => "multisite_id", "value" => $pParamHash['multisite_id'] );
 				$result = $this->mDb->associateUpdate( BIT_DB_PREFIX."tiki_multisites", $pParamHash['server_store'], $msId );
 				$this->expungePreferences( $pParamHash['multisite_id'] );
@@ -118,7 +118,7 @@ class Multisites extends BitBase {
 	* @access private
 	**/
 	function verify( &$pParamHash ) {
-		if( !empty( $pParamHash['multisite_id'] ) && is_numeric( $pParamHash['multisite_id'] ) ) {
+		if( @BitBase::verifyId( $pParamHash['multisite_id'] ) ) {
 			$pParamHash['server_store']['multisite_id'] = $pParamHash['multisite_id'];
 		}
 
@@ -163,7 +163,7 @@ class Multisites extends BitBase {
 	**/
 	function expunge( $pMultisiteId=NULL ) {
 		$ret = FALSE;
-		if( !empty( $pMultisiteId ) && is_numeric( $pMultisiteId ) ) {
+		if( @BitBase::verifyId( $pMultisiteId ) ) {
 			$query = "DELETE FROM `".BIT_DB_PREFIX."tiki_multisites` WHERE `multisite_id` = ?";
 			$ret = $this->mDb->query( $query, array( $pMultisiteId ) );
 			$this->expungePreferences( $pMultisiteId );
@@ -179,7 +179,7 @@ class Multisites extends BitBase {
 	**/
 	function expungePreferences( $pMultisiteId=NULL ) {
 		$ret = FALSE;
-		if( !empty( $pMultisiteId ) && is_numeric( $pMultisiteId ) ) {
+		if( @BitBase::verifyId( $pMultisiteId ) ) {
 			$query = "DELETE FROM `".BIT_DB_PREFIX."tiki_multisite_preferences` WHERE `multisite_id` = ?";
 			$ret = $this->mDb->query( $query, array( $pMultisiteId ) );
 		}
