@@ -1,12 +1,12 @@
 <?php
-// $Header: /cvsroot/bitweaver/_bit_multisites/admin/schema_inc.php,v 1.1 2005/06/24 19:56:30 bitweaver Exp $
+// $Header: /cvsroot/bitweaver/_bit_multisites/admin/schema_inc.php,v 1.2 2006/01/31 20:18:41 bitweaver Exp $
 $tables = array(
-	'tiki_multisites' => "
+	'multisites' => "
 		multisite_id I4 AUTO PRIMARY,
 		server_name C(100) PRIMARY NOTNULL,
 		description C(180)
 	",
-	'tiki_multisite_preferences' => "
+	'multisite_preferences' => "
 		multisite_id I4 NOTNULL,
 		name C(40) NOTNULL,
 		value C(250)
