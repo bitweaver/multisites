@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/bitweaver/_bit_multisites/admin/schema_inc.php,v 1.2 2006/01/31 20:18:41 bitweaver Exp $
+// $Header: /cvsroot/bitweaver/_bit_multisites/admin/schema_inc.php,v 1.3 2006/02/01 12:07:44 squareing Exp $
 $tables = array(
 	'multisites' => "
 		multisite_id I4 AUTO PRIMARY,
@@ -19,7 +19,7 @@ foreach( array_keys( $tables ) as $tableName ) {
     $gBitInstaller->registerSchemaTable( MULTISITES_PKG_NAME, $tableName, $tables[$tableName] );
 }
 
-$gBitInstaller->registerPackageInfo(MULTISITES_PKG_NAME, array(
+$gBitInstaller->registerPackageInfo( MULTISITES_PKG_NAME, array(
 	'description' => "Multisites allows you to set up bitweaver for Multi-homing.",
 	'license' => '<a href="http://www.gnu.org/licenses/licenses.html#LGPL">LGPL</a>',
 	'version' => '0.1',
