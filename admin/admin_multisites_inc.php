@@ -1,10 +1,8 @@
 <?php
-// $Header: /cvsroot/bitweaver/_bit_multisites/admin/admin_multisites_inc.php,v 1.2 2005/07/27 10:59:16 wolff_borg Exp $
+// $Header: /cvsroot/bitweaver/_bit_multisites/admin/admin_multisites_inc.php,v 1.3 2006/02/01 20:38:41 squareing Exp $
 // Copyright (c) 2005 bitweaver Sample
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
-
-include_once( THEMES_PKG_PATH.'theme_control_lib.php' );
 
 if( !empty( $_REQUEST['ms_id'] ) && !empty( $_REQUEST['action'] ) ) {
 	if( $_REQUEST['action'] == 'edit' ) {
@@ -68,7 +66,7 @@ if( !empty( $gMultisites->mErrors ) ) {
 $gBitSmarty->assign( 'listMultisites', $gMultisites->getMultisites() );
 
 // Get list of available styles
-$styles = &$tcontrollib->getStyles( NULL, TRUE );
+$styles = $gBitThemes->getStyles( NULL, TRUE );
 $gBitSmarty->assign( "styles", $styles );
 
 // Get list of available languages
