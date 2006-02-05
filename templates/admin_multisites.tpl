@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/bitweaver/_bit_multisites/templates/admin_multisites.tpl,v 1.4 2005/10/29 17:54:49 squareing Exp $ *}
+{* $Header: /cvsroot/bitweaver/_bit_multisites/templates/admin_multisites.tpl,v 1.5 2006/02/05 21:31:07 squareing Exp $ *}
 {strip}
 {form}
 	{jstabs}
@@ -33,7 +33,7 @@
 				<div class="row">
 					{formlabel label="Site Title" for="site_title"}
 					{forminput}
-						<input type="text" id="site_title" name="server_prefs[siteTitle]" size="50" value="{$editSite.prefs.siteTitle|escape}" />
+						<input type="text" id="site_title" name="server_prefs[site_title]" size="50" value="{$editSite.prefs.site_title|escape}" />
 					{/forminput}
 				</div>
 
@@ -59,17 +59,17 @@
 				</div>
 
 				<div class="row">
-					{formlabel label="Home page" for="bitIndex"}
+					{formlabel label="Home page" for="bit_index"}
 					{forminput}
-						<select name="server_prefs[bitIndex]" id="bitIndex">
+						<select name="server_prefs[bit_index]" id="bit_index">
 							<option value=""></option>
-							<option value="my_page"{if $editSite.prefs.bitIndex eq 'my_page'} selected="selected"{/if}>{tr}My Page{/tr}</option>
-							<option value="user_home"{if $editSite.prefs.bitIndex eq 'user_home'} selected="selected"{/if}>{tr}User's homepage{/tr}</option>
-							<option value="group_home"{if $editSite.prefs.bitIndex eq 'group_home'} selected="selected"{/if}>{tr}Group home{/tr}</option>
-							<option value="custom_home"{if $editSite.prefs.bitIndex eq $editSite.prefs.urlIndex and $editSite.prefs.bitIndex} selected="selected"{/if}>{tr}Custom home{/tr}</option>
+							<option value="my_page"{if $editSite.prefs.bit_index eq 'my_page'} selected="selected"{/if}>{tr}My Page{/tr}</option>
+							<option value="user_home"{if $editSite.prefs.bit_index eq 'user_home'} selected="selected"{/if}>{tr}User's homepage{/tr}</option>
+							<option value="group_home"{if $editSite.prefs.bit_index eq 'group_home'} selected="selected"{/if}>{tr}Group home{/tr}</option>
+							<option value="custom_home"{if $editSite.prefs.bit_index eq $editSite.prefs.url_index and $editSite.prefs.bit_index} selected="selected"{/if}>{tr}Custom home{/tr}</option>
 							{foreach key=name item=package from=$gBitSystem->mPackages }
 								{if $package.homeable && $package.installed}
-									<option {if $editSite.prefs.bitIndex eq $package.url|cat:"index.php"}selected="selected"{/if} value="{$package.url|cat:"index.php"}">{$package.name|capitalize}</option>
+									<option {if $editSite.prefs.bit_index eq $package.url|cat:"index.php"}selected="selected"{/if} value="{$package.url|cat:"index.php"}">{$package.name|capitalize}</option>
 								{/if}
 							{/foreach}
 						</select>
@@ -77,9 +77,9 @@
 				</div>
 
 				<div class="row">
-					{formlabel label="URI for custom home" for="urlIndex"}
+					{formlabel label="URI for custom home" for="url_index"}
 					{forminput}
-						<input type="text" id="urlIndex" name="server_prefs[urlIndex]" value="{$editSite.prefs.urlIndex|escape}" size="50" />
+						<input type="text" id="url_index" name="server_prefs[url_index]" value="{$editSite.prefs.url_index|escape}" size="50" />
 					{/forminput}
 				</div>
 			{/legend}
