@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/bitweaver/_bit_multisites/admin/admin_multisites_inc.php,v 1.3 2006/02/01 20:38:41 squareing Exp $
+// $Header: /cvsroot/bitweaver/_bit_multisites/admin/admin_multisites_inc.php,v 1.4 2006/02/06 00:09:31 squareing Exp $
 // Copyright (c) 2005 bitweaver Sample
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -33,9 +33,9 @@ $layoutSettings = array(
 $gBitSmarty->assign( 'layoutSettings',$layoutSettings );
 
 if( !empty( $_REQUEST['store_server'] ) ) {
-	// Special handling for linked items: bitIndex and urlIndex
-	if (!empty($_REQUEST["server_prefs"]["urlIndex"]) && $_REQUEST["server_prefs"]["bitIndex"] == 'custom_home') {
-		$_REQUEST["server_prefs"]["bitIndex"] = $_REQUEST["server_prefs"]["urlIndex"];
+	// Special handling for linked items: bit_index and url_index
+	if (!empty($_REQUEST["server_prefs"]["url_index"]) && $_REQUEST["server_prefs"]["bit_index"] == 'custom_home') {
+		$_REQUEST["server_prefs"]["bit_index"] = $_REQUEST["server_prefs"]["url_index"];
 	}
 
 	// prepare the checkbox data for storage
