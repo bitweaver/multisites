@@ -3,7 +3,7 @@
 * Multisites is a package that allows multi-homing for bitweaver
 *
 * @package  multisites
-* @version $Header: /cvsroot/bitweaver/_bit_multisites/Multisites.php,v 1.5 2006/01/31 20:18:41 bitweaver Exp $
+* @version $Header: /cvsroot/bitweaver/_bit_multisites/Multisites.php,v 1.6 2006/02/08 23:24:28 spiderr Exp $
 * @author   xing <xing@synapse.plus.com>
 */
 
@@ -88,8 +88,7 @@ class Multisites extends BitBase {
 		if( $this->verify($pParamHash ) ) {
 			$this->mDb->StartTrans();
 			if( @BitBase::verifyId( $pParamHash['multisite_id'] ) ) {
-				$msId = array ( "name" => "multisite_id", "value" => $pParamHash['multisite_id'] );
-				$result = $this->mDb->associateUpdate( BIT_DB_PREFIX."multisites", $pParamHash['server_store'], $msId );
+				$result = $this->mDb->associateUpdate( BIT_DB_PREFIX."multisites", $pParamHash['server_store'], array( "multisite_id" => $pParamHash['multisite_id'] ) );
 				$this->expungePreferences( $pParamHash['multisite_id'] );
 				foreach( $pParamHash['prefs_store'] as $pref ) {
 					$result = $this->mDb->associateInsert( BIT_DB_PREFIX."multisite_preferences", $pref );
