@@ -3,7 +3,7 @@
 * Multisites is a package that allows multi-homing for bitweaver
 *
 * @package  multisites
-* @version $Header: /cvsroot/bitweaver/_bit_multisites/Multisites.php,v 1.6 2006/02/08 23:24:28 spiderr Exp $
+* @version $Header: /cvsroot/bitweaver/_bit_multisites/Multisites.php,v 1.7 2006/02/09 10:30:37 squareing Exp $
 * @author   xing <xing@synapse.plus.com>
 */
 
@@ -17,6 +17,7 @@ class Multisites extends BitBase {
 	* id of the currently active domain
 	*/
 	var $mMultisiteId;
+	var $mPrefs;
 
 	/**
 	* Initialisation of this class
