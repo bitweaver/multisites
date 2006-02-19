@@ -3,7 +3,7 @@
 * Multisites is a package that allows multi-homing for bitweaver
 *
 * @package  multisites
-* @version $Header: /cvsroot/bitweaver/_bit_multisites/Multisites.php,v 1.7 2006/02/09 10:30:37 squareing Exp $
+* @version $Header: /cvsroot/bitweaver/_bit_multisites/Multisites.php,v 1.8 2006/02/19 19:14:21 lsces Exp $
 * @author   xing <xing@synapse.plus.com>
 */
 
@@ -44,7 +44,7 @@ class Multisites extends BitBase {
 			$result = $this->mDb->query( $query, array( $this->mMultisiteId ) );
 			if( !empty( $result ) ) {
 				while( $res = $result->fetchRow() ) {
-					$this->mPrefs[$res['name']] = $res['value'];
+					$this->mPrefs[$res['name']] = $res['pref_value'];
 				}
 			}
 		}
@@ -72,7 +72,7 @@ class Multisites extends BitBase {
 		$query = "SELECT * FROM `".BIT_DB_PREFIX."multisite_preferences`".$where;
 		$result = $this->mDb->query( $query, $bindvals );
 		while( $res = $result->fetchRow() ) {
-			$ret[$res['multisite_id']]['prefs'][$res['name']] = $res['value'];
+			$ret[$res['multisite_id']]['prefs'][$res['name']] = $res['pref_value'];
 		}
 
 		return( empty( $ret ) ? NULL : $ret );
@@ -140,7 +140,7 @@ class Multisites extends BitBase {
 				$pParamHash['prefs_store'][] = array(
 					'multisite_id' => $pParamHash['multisite_id'],
 					'name' => $pref,
-					'value' => $value,
+					'pref_value' => $value,
 				);
 			}
 		} else {
