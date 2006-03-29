@@ -12,6 +12,11 @@ array( 'DATADICT' => array(
 		'bit_multisites' => 'multisites',
 		'bit_multisite_preferences' => 'multisite_preferences',
 	)),
+	array( 'RENAMECOLUMN' => array(
+		'multisite_preferences' => array(
+			'`value`' => 'pref_value'
+		),
+	)),
 )),
 
 		)
