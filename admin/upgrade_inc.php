@@ -9,12 +9,12 @@ $upgrades = array(
 // de-tikify tables
 array( 'DATADICT' => array(
 	array( 'RENAMETABLE' => array(
-		'bit_multisites' => 'multisites',
-		'bit_multisite_preferences' => 'multisite_preferences',
+		'tiki_multisites' => 'multisites',
+		'tiki_multisite_preferences' => 'multisite_preferences',
 	)),
 	array( 'RENAMECOLUMN' => array(
 		'multisite_preferences' => array(
-			'`value`' => 'pref_value'
+			'`value`' => '`pref_value` C(250)'
 		),
 	)),
 )),
