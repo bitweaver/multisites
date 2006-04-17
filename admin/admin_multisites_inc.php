@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/bitweaver/_bit_multisites/admin/admin_multisites_inc.php,v 1.5 2006/02/06 22:56:47 squareing Exp $
+// $Header: /cvsroot/bitweaver/_bit_multisites/admin/admin_multisites_inc.php,v 1.6 2006/04/17 16:23:21 squareing Exp $
 // Copyright (c) 2005 bitweaver Sample
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -17,16 +17,16 @@ if( !empty( $_REQUEST['ms_id'] ) && !empty( $_REQUEST['action'] ) ) {
 }
 
 $layoutSettings = array(
-	'top_bar' => array(
+	'site_top_bar' => array(
 		'label' => 'Top bar menu',
 	),
-	'top_bar_dropdown' => array(
+	'site_top_bar_dropdown' => array(
 		'label' => 'Dropdown menu',
 	),
-	'right_column' => array(
+	'site_right_column' => array(
 		'label' => 'Right Module Column',
 	),
-	'left_column' => array(
+	'site_left_column' => array(
 		'label' => 'Left Module Column',
 	),
 );
