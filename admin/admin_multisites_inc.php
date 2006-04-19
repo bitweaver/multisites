@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/bitweaver/_bit_multisites/admin/admin_multisites_inc.php,v 1.7 2006/04/19 13:48:38 squareing Exp $
+// $Header: /cvsroot/bitweaver/_bit_multisites/admin/admin_multisites_inc.php,v 1.8 2006/04/19 17:18:14 spiderr Exp $
 // Copyright (c) 2005 bitweaver Sample
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -34,7 +34,7 @@ $gBitSmarty->assign( 'layoutSettings',$layoutSettings );
 
 if( !empty( $_REQUEST['store_server'] ) ) {
 	// Special handling for linked items: bit_index and site_url_index
-	if (!empty($_REQUEST["server_prefs"]["site_url_index"]) && $_REQUEST["server_prefs"]["bit_index"] == 'custom_home') {
+	if (!empty($_REQUEST["server_prefs"]["site_url_index"]) && $_REQUEST["server_prefs"]["bit_index"] == 'users_custom_home') {
 		$_REQUEST["server_prefs"]["bit_index"] = $_REQUEST["server_prefs"]["site_url_index"];
 	}
 
