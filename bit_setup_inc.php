@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/bitweaver/_bit_multisites/bit_setup_inc.php,v 1.3 2006/03/21 09:19:18 bitweaver Exp $
+// $Header: /cvsroot/bitweaver/_bit_multisites/bit_setup_inc.php,v 1.4 2006/07/02 17:05:31 nickpalmer Exp $
 
 global $gBitSystem, $gMultisites, $gBitLanguage;
 
@@ -21,7 +21,7 @@ if( $gBitSystem->isPackageActive( 'multisites' ) ) {
 			}
 		}
 
-		$gBitSystem->mPrefs = array_merge( $gBitSystem->mConfig, $override );
+		$gBitSystem->mConfig = array_merge( $gBitSystem->mConfig, $override );
 		if( !empty( $gMultisites->mPrefs['bitlanguage'] ) ) {
 			$gBitLanguage->setLanguage( $gMultisites->mPrefs['bitlanguage'] );
 		}
