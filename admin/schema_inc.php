@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/bitweaver/_bit_multisites/admin/schema_inc.php,v 1.7 2006/07/10 01:03:35 nickpalmer Exp $
+// $Header: /cvsroot/bitweaver/_bit_multisites/admin/schema_inc.php,v 1.8 2006/07/10 14:35:12 spiderr Exp $
 $tables = array(
 	'multisites' => "
 		multisite_id I4 AUTO PRIMARY,
@@ -34,7 +34,7 @@ $gBitInstaller->registerPackageInfo( MULTISITES_PKG_NAME, array(
 $gBitInstaller->registerPreferences( MULTISITES_PKG_NAME, array(
 		array( MULTISITES_PKG_NAME, 'multisites_per_site_content','y' ),
 		array( MULTISITES_PKG_NAME, 'multisites_use_jstab', 'y' ),
-		array( MULTISTEIS_PKG_NAME, 'multisites_limit_member_number','10' ),
+		array( MULTISITES_PKG_NAME, 'multisites_limit_member_number','10' ),
 		));
 
 $gBitInstaller->registerUserPermissions( MULTISITES_PKG_NAME, array(
