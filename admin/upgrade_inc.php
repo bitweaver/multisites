@@ -33,7 +33,7 @@ global $gBitInstaller;
 $gBitInstaller->registerPreferences( MULTISITES_PKG_NAME, array(
 		array( MULTISITES_PKG_NAME, 'multisites_per_site_content','y' ),
 		array( MULTISITES_PKG_NAME, 'multisites_use_jstab', 'y' ),
-		array( PIGEONHOLES_PKG_NAME, 'multisites_limit_member_number','10' ),
+		array( MULTISITES_PKG_NAME, 'multisites_limit_member_number','10' ),
 		));
 
 $gBitInstaller->registerUserPermissions( MULTISITES_PKG_NAME, array(
