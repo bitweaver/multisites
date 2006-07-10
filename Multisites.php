@@ -1,9 +1,9 @@
 <?php
 /**
-* Multisites is a package that allows multi-homing for bitweaver
+* Multisites is a package that allows multi-homing for bitweaver and restriction of content to certain sites
 *
 * @package  multisites
-* @version $Header: /cvsroot/bitweaver/_bit_multisites/Multisites.php,v 1.8 2006/02/19 19:14:21 lsces Exp $
+* @version $Header: /cvsroot/bitweaver/_bit_multisites/Multisites.php,v 1.9 2006/07/10 00:32:51 nickpalmer Exp $
 * @author   xing <xing@synapse.plus.com>
 */
 
@@ -28,7 +28,7 @@ class Multisites extends BitBase {
 	}
 
 	/**
-	* Load the currenlty active domain data from the db
+	* Load the currently active domain data from the db
 	**/
 	function load() {
 		$query = "SELECT * FROM `".BIT_DB_PREFIX."multisites` WHERE `server_name`=?";
@@ -54,25 +54,50 @@ class Multisites extends BitBase {
 	/**
 	* Get the list of servers and their preferences
 	* @param if $pMultisiteId is set, it only gets specified server
+	* @param if $pContentId is set, it selects multisites selected for the specfied content
 	**/
-	function getMultisites( $pMultisiteId=NULL ) {
+	function getMultisites( $pMultisiteId=NULL , $pContentId=NULL ) {
 		$where = '';
+		$join = '';
 		$bindvals = array();
 		if( @BitBase::verifyId( $pMultisiteId ) ) {
-			$where = " WHERE `multisite_id`=?";
+			$where = " WHERE `ms.multisite_id`=?";
 			$bindvals[] = $pMultisiteId;
 		}
 
-		$query = "SELECT * FROM `".BIT_DB_PREFIX."multisites`".$where;
-		$result = $this->mDb->query( $query, $bindvals );
+		$select= "SELECT * FROM `".BIT_DB_PREFIX."multisites` ms ";
+		$query = $select.$where;
+		$result = $this->mDb->query( $query, $bindvals );		
 		while( $res = $result->fetchRow() ) {
 			$ret[$res['multisite_id']] = $res;
 		}
 
-		$query = "SELECT * FROM `".BIT_DB_PREFIX."multisite_preferences`".$where;
+		$join = " LEFT JOIN `".BIT_DB_PREFIX."multisite_preferences` mp ON (ms.multisite_id=mp.multisite_id) ".$join;
+		$query = $select.$join.$where;
 		$result = $this->mDb->query( $query, $bindvals );
 		while( $res = $result->fetchRow() ) {
 			$ret[$res['multisite_id']]['prefs'][$res['name']] = $res['pref_value'];
+		}
+		
+		if( !empty( $pContentId ) ) {
+			$join = " LEFT JOIN `".BIT_DB_PREFIX."multisite_content` mc ON (ms.multisite_id=mc.multisite_id)";
+			if( @BitBase::verifyId( $pContentId ) ) {
+				if ($where != '') {
+					$where = $where." AND mc.content_id=?";
+				}
+				else {
+					$where = " WHERE mc.content_id=?";
+				}
+				$bindvals[] = $pContentId;
+			}
+			
+			$query = $select.$join.$where;
+			$result = $this->mDb->query( $query, $bindvals );
+			while( $res = $result->fetchRow() ) {
+				if ( !empty($res['content_id']) ) {
+					$ret[$res['multisite_id']][0]['selected'] = TRUE;
+				}
+			}
 		}
 
 		return( empty( $ret ) ? NULL : $ret );
@@ -164,10 +189,31 @@ class Multisites extends BitBase {
 	function expunge( $pMultisiteId=NULL ) {
 		$ret = FALSE;
 		if( @BitBase::verifyId( $pMultisiteId ) ) {
+			$this->expungeRestrictions($pMultisiteId);
+			$this->expungePreferences( $pMultisiteId );
 			$query = "DELETE FROM `".BIT_DB_PREFIX."multisites` WHERE `multisite_id` = ?";
 			$ret = $this->mDb->query( $query, array( $pMultisiteId ) );
-			$this->expungePreferences( $pMultisiteId );
 		}
+		return $ret;
+	}
+
+	/**
+	 * remove restrictions by multisite_id from db
+	 *
+	 * @param $pMultisiteId
+	 * @access public
+	 **/
+	function expungeRestrictions( $pMultisiteId, $pContentId = NULL ) {
+		$ret = FALSE;
+		if ( !empty($pMultisiteId) && @BitBase::verifyId( $pMultisiteId ) ) {
+			$query = "DELETE FROM `".BIT_DB_PREFIX."multisite_content` WHERE multiste_id = ?";
+			$ret = $this->mDb->query( $query, array( $pMultisiteId ) );
+		}
+		if ( !empty($pContentId) && @BitBase::verifyId( $pContentId ) ) {
+			$query = "DELETE FROM `".BIT_DB_PREFIX."multisite_content` WHERE content_id =?";
+			$ret = $this->mDb->query( $query, array( $pContentId ) );
+		}
+
 		return $ret;
 	}
 
@@ -185,5 +231,168 @@ class Multisites extends BitBase {
 		}
 		return $ret;
 	}
+	
+	/**
+	 * Store content restriction
+	 * @param $pParamHash an array of restrictions to be stored.
+	 * @param $pParamHash[multisite_id] The id of the site to restrict to
+	 * @param $pParamHash[content_id] The id of the content to restrict
+	 * @return bool TRUE on success, FALSE if store could not occur. If FALSE, $this->mErrors will have reason why
+	 * @access public
+	 **/
+	function insertRestriction( &$pParamHash ) {
+		if( $this->verifyRestrictions($pParamHash) ) {
+			$this->mDb->StartTrans();
+			foreach( $pParamHash['member_store'] as $item ) {
+				$result = $this->mDb->associateInsert( BIT_DB_PREFIX."multisite_content", $item );
+			}
+			$this->mDb->CompleteTrans();		
+		} else {
+			vd( $this->mErrors );
+		}
+		return( count( $this->mErrors ) == 0 );
+	}
+
+	/**
+	* verify, clean up and prepare data to be stored
+	* @param $pParamHash all information that is being stored. will update $pParamHash by reference with fixed array of items
+	* @return bool TRUE on success, FALSE if store could not occur. If FALSE, $this->mErrors will have reason why
+	* @access private
+	**/
+	function verifyRestrictions( &$pParamHash ) {
+		foreach( $pParamHash as $key => $item ) {
+			if( isset( $item['multisite_id'] ) && @BitBase::verifyId( $item['multisite_id'] ) ) {
+				$tmp['member_store'][$key]['multisite_id'] = $item['multisite_id'];
+			} else {
+				$this->mErrors['store_members'] = tra( 'The multisite_id is missing.' );
+			}
+			
+			if( isset( $item['content_id'] ) && @BitBase::verifyId( $item['content_id'] ) ) {
+				$tmp['member_store'][$key]['content_id'] = $item['content_id'];
+			} else {
+				$this->mErrors['store_members'] = 'The content_id is not valid.';
+			}
+		}
+		
+		$pParamHash = $tmp;
+		return( count( $this->mErrors ) == 0 );
+	}
+}
+
+// ============= SERVICE FUNCTIONS =============
+
+function multisites_content_display( &$pObject ) {
+	// TODO: Add a feature to display sites the content is shown on to permissioned users
+}
+
+function multisites_content_edit( $pObject=NULL ) {
+	global $gBitSmarty, $gBitUser, $gBitSystem;
+	$multisitesList = array();
+
+	if( $gBitSystem->isFeatureActive('multisites_per_site_content') && $gBitUser->hasPermission( 'p_multisites_restrict_content' )) {
+		$multisites = new Multisites();
+		if ($multisitesList = $multisites->getMultisites( NULL, !empty( $pObject->mContentId ) ? $pObject->mContentId : NULL )) {
+			$gBitSmarty->assign( 'multisitesList', $multisitesList);
+		}
+	}
+}
+
+function multisites_content_expunge( $pObject=NULL ) {
+	$multisites = new Multisites();
+	$multisites->expungeRestrictions(NULL, $pObject->mContentId);
+}
+
+function multisites_content_preview() {
+	global $gBitSmarty, $gBitUser, $gBitSystem;
+	
+	if( $gBitSystem->isFeatureActive('multisites_per_site_content') && $gBitUser->hasPermission( 'p_multisites_restrict_content' )) {
+		$multisites = new Multisites();
+
+		if ($multisitesList = $multisites->getMultisites()) {
+			foreach( $multisitesList as $key => $site ) {
+				if (!empty( $_REQUEST['multisites']['multisite'] ) && in_array( $key, $_REQUEST['multisites']['multisite'] ) ) {
+					$multisitesList[$key][0]['selected'] = TRUE;
+				} else {
+					$multisitesList[$key][0]['selected'] = FALSE;
+				}
+			}
+			$gBitSmarty->assign( 'multisitesList', $multisitesList );
+		}
+	}
+}
+
+function multisites_content_store( $pObject, $pParamHash ) {
+	global $gBitSmarty, $gBitUser, $gBitSystem;	
+
+	if( $gBitSystem->isFeatureActive('multisites_per_site_content') && $gBitUser->hasPermission( 'p_multisites_restrict_content' )) {
+		if( is_object( $pObject  ) && empty( $pParamHash['content_id'] ) ) {
+			$pParamHash['content_id'] = $pObject->mContentId;
+		}
+
+		echo "Request: " . var_dump($_REQUEST['multisites']);
+		echo "<br><br>";
+		echo "Saving content_id: ".$pParamHash['content_id'];
+
+		if( !empty( $pParamHash['content_id'] ) ) {
+			$multisites = new Multisites();
+			$multisitesList = $multisites->getMultisites( NULL, $pParamHash['content_id'] );
+
+			// Now we need to work out if we need to save at all
+			$selectedItem = array();
+			if( !empty( $multisitesList )) {
+				foreach( $multisitesList as $site ) {
+					if( !empty( $site[0]['selected'] )) {
+						$selectedItem[] = $site['multisite_id'];
+						echo "Adding: ".var_dump($site);
+					}
+				}
+			}
+
+			// Quick and Dirty check to start of with
+			if( empty( $_REQUEST['multisites'] ) || count( $_REQUEST['multisites']['multisite']) != count( $selectedItem ) ) {
+				$modified = TRUE;
+			} else {
+				// more thorough check
+				foreach( $selectedItem as $item ) {
+					if( !in_array( $item, $_REQUEST['multisites']['multisite'] ) ) {
+						$modified = TRUE;
+					}
+				}
+			}
+
+			if( !empty( $modified ) ) {
+				// first remove all entries with this content_id
+				echo "Doing expunge";
+				if ($multisites->expungeRestrictions( NULL, $pParamHash['content_id'] ) && !empty( $_REQUEST['multisites'] ) ) {
+					// insert the content restrictions
+					foreach( $_REQUEST['multisites']['multisite'] as $m_id ) {
+						$siteHash[] = array(
+								    'multisite_id' => $m_id,
+								    'content_id' => $pParamHash['content_id']
+								    );
+					}
+					if( !$multisites->insertRestriction( $siteHash ) ) {
+						$gBitSmarty->assign( 'msg', tra( "There was a problem setting the site restriction." ) );
+						$gBitSmarty->display( 'error.tpl' );
+						die;
+					}
+				}
+			}
+		}
+	}
+}
+
+// Limits the list of content to those with an entry that matches the server
+// name or an entry that has no multistes restrictions if the user can't view everything.
+function multisites_content_sql ( &$pObject, $pParamHash = '') {
+	global $gBitSystem, $gBitUser;
+	$ret = array();
+	// We only limit content if the user has activated this feature and they are not an administrator
+	if( $gBitSystem->isFeatureActive('multisites_per_site_content') && !$gBitUser->hasPermission('p_multisites_view_restricted') ) {
+		$ret['join_sql'] = " LEFT OUTER JOIN `".BIT_DB_PREFIX."multisite_content` mc ON (lc.`content_id` = mc.`content_id`) LEFT JOIN `".BIT_DB_PREFIX."multisites` ms ON (mc.`multisite_id` = ms.`multisite_id`) ";
+		$ret['where_sql'] = " AND ms.server_name IS NULL OR ms.`server_name` =? ";
+		$ret['bind_vars'][] = $_SERVER['SERVER_NAME'];
+	}
+	return $ret;
 }
 ?>
