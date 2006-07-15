@@ -3,7 +3,7 @@
 * Multisites is a package that allows multi-homing for bitweaver and restriction of content to certain sites
 *
 * @package  multisites
-* @version $Header: /cvsroot/bitweaver/_bit_multisites/Multisites.php,v 1.9 2006/07/10 00:32:51 nickpalmer Exp $
+* @version $Header: /cvsroot/bitweaver/_bit_multisites/Multisites.php,v 1.10 2006/07/15 09:57:21 nickpalmer Exp $
 * @author   xing <xing@synapse.plus.com>
 */
 
@@ -329,10 +329,6 @@ function multisites_content_store( $pObject, $pParamHash ) {
 			$pParamHash['content_id'] = $pObject->mContentId;
 		}
 
-		echo "Request: " . var_dump($_REQUEST['multisites']);
-		echo "<br><br>";
-		echo "Saving content_id: ".$pParamHash['content_id'];
-
 		if( !empty( $pParamHash['content_id'] ) ) {
 			$multisites = new Multisites();
 			$multisitesList = $multisites->getMultisites( NULL, $pParamHash['content_id'] );
@@ -343,7 +339,6 @@ function multisites_content_store( $pObject, $pParamHash ) {
 				foreach( $multisitesList as $site ) {
 					if( !empty( $site[0]['selected'] )) {
 						$selectedItem[] = $site['multisite_id'];
-						echo "Adding: ".var_dump($site);
 					}
 				}
 			}
@@ -362,7 +357,6 @@ function multisites_content_store( $pObject, $pParamHash ) {
 
 			if( !empty( $modified ) ) {
 				// first remove all entries with this content_id
-				echo "Doing expunge";
 				if ($multisites->expungeRestrictions( NULL, $pParamHash['content_id'] ) && !empty( $_REQUEST['multisites'] ) ) {
 					// insert the content restrictions
 					foreach( $_REQUEST['multisites']['multisite'] as $m_id ) {
