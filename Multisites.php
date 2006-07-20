@@ -3,7 +3,7 @@
 * Multisites is a package that allows multi-homing for bitweaver and restriction of content to certain sites
 *
 * @package  multisites
-* @version $Header: /cvsroot/bitweaver/_bit_multisites/Multisites.php,v 1.11 2006/07/16 01:25:39 nickpalmer Exp $
+* @version $Header: /cvsroot/bitweaver/_bit_multisites/Multisites.php,v 1.12 2006/07/20 00:32:54 nickpalmer Exp $
 * @author   xing <xing@synapse.plus.com>
 */
 
@@ -206,7 +206,7 @@ class Multisites extends BitBase {
 	function expungeRestrictions( $pMultisiteId, $pContentId = NULL ) {
 		$ret = FALSE;
 		if ( !empty($pMultisiteId) && @BitBase::verifyId( $pMultisiteId ) ) {
-			$query = "DELETE FROM `".BIT_DB_PREFIX."multisite_content` WHERE multiste_id = ?";
+			$query = "DELETE FROM `".BIT_DB_PREFIX."multisite_content` WHERE multisite_id = ?";
 			$ret = $this->mDb->query( $query, array( $pMultisiteId ) );
 		}
 		if ( !empty($pContentId) && @BitBase::verifyId( $pContentId ) ) {
