@@ -1,7 +1,7 @@
 <?php
-// $Header: /cvsroot/bitweaver/_bit_multisites/bit_setup_inc.php,v 1.5 2006/07/10 00:32:51 nickpalmer Exp $
+// $Header: /cvsroot/bitweaver/_bit_multisites/bit_setup_inc.php,v 1.6 2006/07/23 00:56:02 jht001 Exp $
 
-global $gBitSystem, $gMultisites, $gBitLanguage;
+global $gBitSystem, $gMultisites, $gBitLanguage, $gLibertySystem;
 
 $registerHash = array(
 	'package_name' => 'multisites',
