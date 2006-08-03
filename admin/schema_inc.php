@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/bitweaver/_bit_multisites/admin/schema_inc.php,v 1.8 2006/07/10 14:35:12 spiderr Exp $
+// $Header: /cvsroot/bitweaver/_bit_multisites/admin/schema_inc.php,v 1.9 2006/08/03 10:19:10 squareing Exp $
 $tables = array(
 	'multisites' => "
 		multisite_id I4 AUTO PRIMARY,
@@ -15,9 +15,10 @@ $tables = array(
 		multisite_id I4 NOTNULL PRIMARY,
 		content_id I4 NOTNULL PRIMARY
 		CONSTRAINT '
-			, CONSTRAINT `multisite_content_ref` FOREIGN KEY (`content_id`) REFERENCES `".BIT_DB_PREFIX."liberty_content`( `content_id` )
-			, CONSTRAINT `multisite_multisite_ref` FOREIGN KEY (`multisite_id`) REFERENCES `".BIT_DB_PREFIX."multisites`( `multisite_id` )'
+			, CONSTRAINT `multisite_content_ref` FOREIGN KEY (`content_id`) REFERENCES `".BIT_DB_PREFIX."liberty_content`( `content_id` )'
 	",
+	// this doesn't work and i can't figure out why
+	//, CONSTRAINT `multisite_multisite_ref` FOREIGN KEY (`multisite_id`) REFERENCES `".BIT_DB_PREFIX."multisites`( `multisite_id` )'
 );
 
 global $gBitInstaller;
