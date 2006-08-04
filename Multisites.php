@@ -3,7 +3,7 @@
 * Multisites is a package that allows multi-homing for bitweaver and restriction of content to certain sites
 *
 * @package  multisites
-* @version $Header: /cvsroot/bitweaver/_bit_multisites/Multisites.php,v 1.12 2006/07/20 00:32:54 nickpalmer Exp $
+* @version $Header: /cvsroot/bitweaver/_bit_multisites/Multisites.php,v 1.13 2006/08/04 10:13:59 nickpalmer Exp $
 * @author   xing <xing@synapse.plus.com>
 */
 
@@ -61,12 +61,13 @@ class Multisites extends BitBase {
 		$join = '';
 		$bindvals = array();
 		if( @BitBase::verifyId( $pMultisiteId ) ) {
-			$where = " WHERE `ms.multisite_id`=?";
+			$where = " WHERE ms.`multisite_id`=?";
 			$bindvals[] = $pMultisiteId;
 		}
 
 		$select= "SELECT * FROM `".BIT_DB_PREFIX."multisites` ms ";
 		$query = $select.$where;
+		echo $query;
 		$result = $this->mDb->query( $query, $bindvals );		
 		while( $res = $result->fetchRow() ) {
 			$ret[$res['multisite_id']] = $res;
