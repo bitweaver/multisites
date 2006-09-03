@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/bitweaver/_bit_multisites/templates/edit_sites.tpl,v 1.1 2006/07/10 00:32:52 nickpalmer Exp $ *}
+{* $Header: /cvsroot/bitweaver/_bit_multisites/templates/edit_sites.tpl,v 1.2 2006/09/03 20:11:30 squareing Exp $ *}
 {strip}
 {form}
 	{jstabs}
@@ -154,8 +154,8 @@
 				{/foreach}
 			</td>
 			<td class="actionicon">
-				{smartlink ititle="edit" ibiticon="liberty/edit" action="edit" ms_id=`$site.multisite_id` page=$page}
-				{smartlink ititle="remove" ibiticon="liberty/delete" action="delete" ms_id=`$site.multisite_id` page=$page}
+				{smartlink ititle="edit" ibiticon="icons/accessories-text-editor" action="edit" ms_id=`$site.multisite_id` page=$page}
+				{smartlink ititle="remove" ibiticon="icons/edit-delete" action="delete" ms_id=`$site.multisite_id` page=$page}
 			</td>
 		</tr>
 	{foreachelse}
