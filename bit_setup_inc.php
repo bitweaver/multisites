@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/bitweaver/_bit_multisites/bit_setup_inc.php,v 1.6 2006/07/23 00:56:02 jht001 Exp $
+// $Header: /cvsroot/bitweaver/_bit_multisites/bit_setup_inc.php,v 1.7 2006/09/12 20:02:08 squareing Exp $
 
 global $gBitSystem, $gMultisites, $gBitLanguage, $gLibertySystem;
 
@@ -14,14 +14,13 @@ $gBitSystem->registerPackage( $registerHash );
 if( $gBitSystem->isPackageActive( 'multisites' ) ) {
 	require_once( MULTISITES_PKG_PATH.'Multisites.php' );
 	$gMultisites = new Multisites;
-	
+
 	// Register service hooks
-	$gLibertySystem->registerService( LIBERTY_SERVICE_METADATA, 
-					  MULTISITES_PKG_NAME, 
+	$gLibertySystem->registerService( LIBERTY_SERVICE_METADATA, MULTISITES_PKG_NAME, 
 	array(
-	        // Data Hooks
-	        // TODO: Add hook to display site restricitons when allowed to
-	        //		'content_display_function' => 'multisites_content_display',
+		// Data Hooks
+		// TODO: Add hook to display site restricitons when allowed to
+		//		'content_display_function' => 'multisites_content_display',
 		'content_preview_function' => 'multisites_content_preview',
 		'content_edit_function' => 'multisites_content_edit',
 		'content_store_function' => 'multisites_content_store',
