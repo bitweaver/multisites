@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/bitweaver/_bit_multisites/bit_setup_inc.php,v 1.7 2006/09/12 20:02:08 squareing Exp $
+// $Header: /cvsroot/bitweaver/_bit_multisites/bit_setup_inc.php,v 1.8 2006/09/16 15:08:05 nickpalmer Exp $
 
 global $gBitSystem, $gMultisites, $gBitLanguage, $gLibertySystem;
 
@@ -16,7 +16,7 @@ if( $gBitSystem->isPackageActive( 'multisites' ) ) {
 	$gMultisites = new Multisites;
 
 	// Register service hooks
-	$gLibertySystem->registerService( LIBERTY_SERVICE_METADATA, MULTISITES_PKG_NAME, 
+	$gLibertySystem->registerService( LIBERTY_SERVICE_METADATA, MULTISITES_PKG_NAME,
 	array(
 		// Data Hooks
 		// TODO: Add hook to display site restricitons when allowed to
@@ -26,7 +26,7 @@ if( $gBitSystem->isPackageActive( 'multisites' ) ) {
 		'content_store_function' => 'multisites_content_store',
 		'content_expunge_function' => 'multisites_content_expunge',
 		// Template Hooks
-		'content_edit_'.( $gBitSystem->isFeatureActive( 'multisites_use_jstab' ) ? 'tab_' : 'mini_' ).'tpl' => 
+		'content_edit_'.( $gBitSystem->isFeatureActive( 'multisites_use_jstab' ) ? 'tab_' : 'mini_' ).'tpl' =>
 			'bitpackage:multisites/multisites_input_'.( $gBitSystem->isFeatureActive( 'multisites_use_jstab' ) ? '' : 'mini_' ).'inc.tpl',
 		// TODO: Add hook to display site restrictions when allowed to
 		//		'content_view_tpl' => 'bitpackage:multisites/display_members.tpl',
@@ -40,6 +40,10 @@ if( $gBitSystem->isPackageActive( 'multisites' ) ) {
 		foreach( $gMultisites->mPrefs as $pref => $value ) {
 			if( !empty( $value ) ) {
 				$override[$pref] = $value;
+				// Style is special
+				if ($pref == "style") {
+					$gBitSystem->setStyle($value);
+				}
 			}
 		}
 
