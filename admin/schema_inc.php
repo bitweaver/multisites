@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/bitweaver/_bit_multisites/admin/schema_inc.php,v 1.9 2006/08/03 10:19:10 squareing Exp $
+// $Header: /cvsroot/bitweaver/_bit_multisites/admin/schema_inc.php,v 1.10 2006/11/01 08:40:50 squareing Exp $
 $tables = array(
 	'multisites' => "
 		multisite_id I4 AUTO PRIMARY,
@@ -39,7 +39,7 @@ $gBitInstaller->registerPreferences( MULTISITES_PKG_NAME, array(
 		));
 
 $gBitInstaller->registerUserPermissions( MULTISITES_PKG_NAME, array(
-	array( 'p_multisites_restrict_content', 'Can restrict content to certain sites', 'editor', MULTISITES_PKG_NAME ),
+	array( 'p_multisites_restrict_content', 'Can restrict content to certain sites', 'editors', MULTISITES_PKG_NAME ),
 	array( 'p_multisites_view_restricted', 'Can view all site restricted content', 'admin', MULTISITES_PKG_NAME ),
 	));
 
