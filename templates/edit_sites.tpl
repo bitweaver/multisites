@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/bitweaver/_bit_multisites/templates/edit_sites.tpl,v 1.2 2006/09/03 20:11:30 squareing Exp $ *}
+{* $Header: /cvsroot/bitweaver/_bit_multisites/templates/edit_sites.tpl,v 1.3 2007/01/05 08:31:22 squareing Exp $ *}
 {strip}
 {form}
 	{jstabs}
@@ -24,7 +24,7 @@
 				<div class="row">
 					{formlabel label="Description" for="description"}
 					{forminput}
-						<textarea cols="50" rows="3" name="description" id="description">{$editSite.description}</textarea>
+						<textarea cols="50" rows="3" name="description" id="description">{$editSite.description|escape}</textarea>
 						{formhelp note="Enter a brief description what this server name is intended for. The description is for your own reference."}
 					{/forminput}
 				</div>
@@ -144,8 +144,8 @@
 
 	{foreach from=`$listMultisites` item=site}
 		<tr class="{cycle values='odd,even'}">
-			<td>{$site.server_name}</td>
-			<td>{$site.description}</td>
+			<td>{$site.server_name|escape}</td>
+			<td>{$site.description|escape}</td>
 			<td>
 				{foreach from=`$site.prefs` key=pref item=value}
 					{if $value}
