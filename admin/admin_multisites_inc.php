@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/bitweaver/_bit_multisites/admin/admin_multisites_inc.php,v 1.9 2006/07/10 00:32:51 nickpalmer Exp $
+// $Header: /cvsroot/bitweaver/_bit_multisites/admin/admin_multisites_inc.php,v 1.10 2007/02/24 08:51:08 squareing Exp $
 // Copyright (c) 2005 bitweaver Sample
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -10,8 +10,8 @@ $multisitesSettings = array(
 		'note' => 'Allow content to be limited to a subset of sites',
 	),
 	'multisites_use_jstab' => array(
-		'label' => 'Use seperate Tab',
-		'note' => 'When editing content use a seperate tab to set per site content.',
+		'label' => 'Use separate Tab',
+		'note' => 'When editing content use a separate tab to set per site content.',
 	),
 );
 $gBitSmarty->assign( 'multisitesSettings', $multisitesSettings);

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/bitweaver/_bit_multisites/templates/edit_sites.tpl,v 1.3 2007/01/05 08:31:22 squareing Exp $ *}
+{* $Header: /cvsroot/bitweaver/_bit_multisites/templates/edit_sites.tpl,v 1.4 2007/02/24 08:51:09 squareing Exp $ *}
 {strip}
 {form}
 	{jstabs}
@@ -6,7 +6,7 @@
 			{legend legend="Multi-Homing Server"}
 				<input type="hidden" name="page" value="{$page}" />
 				<input type="hidden" name="multisite_id" value="{$editSite.multisite_id}" />
-				{formfeedback warning='Note that the server name must match what the webserver sets in the SERVER_NAME CGI variable. This is the argument to ServerName in apache. If you use ServerAlias to define other names these will not be distinguishable to this module. This means you must use seperate VirtualHosts with individual ServerName settings but with the same DocumentRoot for this module to work properly.'}
+				{formfeedback warning='Note that the server name must match what the webserver sets in the SERVER_NAME CGI variable. This is the argument to ServerName in apache. If you use ServerAlias to define other names these will not be distinguishable to this module. This means you must use separate VirtualHosts with individual ServerName settings but with the same DocumentRoot for this module to work properly.'}
 
 				{formfeedback warning='If you are using the per site content feature it is recomended to add the main server here as well so that it can be selected as a site to restrict content to. All variables can be left as the default for this server.'}
 				
