@@ -3,7 +3,7 @@
 * Multisites is a package that allows multi-homing for bitweaver and restriction of content to certain sites
 *
 * @package  multisites
-* @version $Header: /cvsroot/bitweaver/_bit_multisites/Multisites.php,v 1.14 2006/08/05 16:54:41 squareing Exp $
+* @version $Header: /cvsroot/bitweaver/_bit_multisites/Multisites.php,v 1.15 2007/03/01 17:49:28 nickpalmer Exp $
 * @author   xing <xing@synapse.plus.com>
 */
 
@@ -384,7 +384,7 @@ function multisites_content_sql ( &$pObject, $pParamHash = '') {
 	// We only limit content if the user has activated this feature and they are not an administrator
 	if( $gBitSystem->isFeatureActive('multisites_per_site_content') && !$gBitUser->hasPermission('p_multisites_view_restricted') ) {
 		$ret['join_sql'] = " LEFT OUTER JOIN `".BIT_DB_PREFIX."multisite_content` mc ON (lc.`content_id` = mc.`content_id`) LEFT JOIN `".BIT_DB_PREFIX."multisites` ms ON (mc.`multisite_id` = ms.`multisite_id`) ";
-		$ret['where_sql'] = " AND ( ms.server_name IS NULL OR ms.`server_name` =? ) ";
+		$ret['where_sql'] = " AND ( ms.`server_name` IS NULL OR ms.`server_name` =? ) ";
 		$ret['bind_vars'][] = $_SERVER['SERVER_NAME'];
 	}
 	return $ret;
