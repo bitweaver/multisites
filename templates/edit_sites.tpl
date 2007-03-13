@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/bitweaver/_bit_multisites/templates/edit_sites.tpl,v 1.4 2007/02/24 08:51:09 squareing Exp $ *}
+{* $Header: /cvsroot/bitweaver/_bit_multisites/templates/edit_sites.tpl,v 1.5 2007/03/13 03:36:10 laetzer Exp $ *}
 {strip}
 {form}
 	{jstabs}
@@ -136,10 +136,10 @@
 <table class="data">
 	<caption>{tr}Saved Servers{/tr}</caption>
 	<tr>
-		<th style="width:18%;">{tr}Server Name{/tr}</th>
-		<th style="width:30%;">{tr}Description{/tr}</th>
-		<th style="width:50%;">{tr}Settings{/tr}</th>
-		<th style="width:2%;">{tr}Actions{/tr}</th>
+		<th class="servername">{tr}Server Name{/tr}</th>
+		<th class="description">{tr}Description{/tr}</th>
+		<th class="settings">{tr}Settings{/tr}</th>
+		<th class="actions">{tr}Actions{/tr}</th>
 	</tr>
 
 	{foreach from=`$listMultisites` item=site}
