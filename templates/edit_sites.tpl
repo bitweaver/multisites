@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/bitweaver/_bit_multisites/templates/edit_sites.tpl,v 1.5 2007/03/13 03:36:10 laetzer Exp $ *}
+{* $Header: /cvsroot/bitweaver/_bit_multisites/templates/edit_sites.tpl,v 1.6 2007/03/14 00:40:12 laetzer Exp $ *}
 {strip}
 {form}
 	{jstabs}
@@ -136,27 +136,30 @@
 <table class="data">
 	<caption>{tr}Saved Servers{/tr}</caption>
 	<tr>
-		<th class="servername">{tr}Server Name{/tr}</th>
-		<th class="description">{tr}Description{/tr}</th>
-		<th class="settings">{tr}Settings{/tr}</th>
-		<th class="actions">{tr}Actions{/tr}</th>
+		<th>{tr}Server{/tr}</th>
+		<th>{tr}Settings{/tr}</th>
 	</tr>
 
 	{foreach from=`$listMultisites` item=site}
 		<tr class="{cycle values='odd,even'}">
-			<td>{$site.server_name|escape}</td>
-			<td>{$site.description|escape}</td>
-			<td>
+			<td class="server">
+				<p>
+					<a href="http://{$site.server_name|escape}">{$site.server_name|escape}</a>
+					<em>{$site.description|escape}</em>
+				</p>
+				<div class="actionicon">
+					{smartlink ititle="edit" ibiticon="icons/accessories-text-editor" action="edit" ms_id=`$site.multisite_id` page=$page}
+					{smartlink ititle="remove" ibiticon="icons/edit-delete" action="delete" ms_id=`$site.multisite_id` page=$page}
+				</div>
+			</td>
+			<td class="settings">
 				{foreach from=`$site.prefs` key=pref item=value}
 					{if $value}
-						<strong>{$pref}</strong>: {$value}<br />
+						<strong>{$pref}</strong>: {$value|truncate:64:"..."}<br />
 					{/if}
 				{/foreach}
 			</td>
-			<td class="actionicon">
-				{smartlink ititle="edit" ibiticon="icons/accessories-text-editor" action="edit" ms_id=`$site.multisite_id` page=$page}
-				{smartlink ititle="remove" ibiticon="icons/edit-delete" action="delete" ms_id=`$site.multisite_id` page=$page}
-			</td>
+
 		</tr>
 	{foreachelse}
 		<tr class="norecords">
