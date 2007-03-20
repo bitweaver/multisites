@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/bitweaver/_bit_multisites/templates/edit_sites.tpl,v 1.7 2007/03/20 02:57:20 laetzer Exp $ *}
+{* $Header: /cvsroot/bitweaver/_bit_multisites/templates/edit_sites.tpl,v 1.8 2007/03/20 03:03:39 laetzer Exp $ *}
 {strip}
 {form}
 	{jstabs}
@@ -123,9 +123,6 @@
 
 	<div class="row submit">
 		<input type="submit" name="store_server" value="{tr}Save Settings{/tr}" />
-		{if $editSite.multisite_id}
-			<br />{smartlink ititle="Add New Site" page=multisites}
-		{/if}
 	</div>
 
 	<div class="row">
@@ -144,9 +141,7 @@
 	<tfoot>
 		<tr>
 			<td colspan="2">
-				{if $editSite.multisite_id}
-					{smartlink ititle="Add New Site" page=multisites}
-				{/if}
+				{smartlink ititle="Add New Site" page=multisites}
 			</td>
 		</tr>	
 	</tfoot>
