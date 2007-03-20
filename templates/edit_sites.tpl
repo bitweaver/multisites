@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/bitweaver/_bit_multisites/templates/edit_sites.tpl,v 1.6 2007/03/14 00:40:12 laetzer Exp $ *}
+{* $Header: /cvsroot/bitweaver/_bit_multisites/templates/edit_sites.tpl,v 1.7 2007/03/20 02:57:20 laetzer Exp $ *}
 {strip}
 {form}
 	{jstabs}
@@ -135,11 +135,22 @@
 
 <table class="data">
 	<caption>{tr}Saved Servers{/tr}</caption>
-	<tr>
-		<th>{tr}Server{/tr}</th>
-		<th>{tr}Settings{/tr}</th>
-	</tr>
-
+	<thead>
+		<tr>
+			<th>{tr}Server{/tr}</th>
+			<th>{tr}Settings{/tr}</th>
+		</tr>
+	</thead>
+	<tfoot>
+		<tr>
+			<td colspan="2">
+				{if $editSite.multisite_id}
+					{smartlink ititle="Add New Site" page=multisites}
+				{/if}
+			</td>
+		</tr>	
+	</tfoot>
+	<tbody>
 	{foreach from=`$listMultisites` item=site}
 		<tr class="{cycle values='odd,even'}">
 			<td class="server">
@@ -155,7 +166,7 @@
 			<td class="settings">
 				{foreach from=`$site.prefs` key=pref item=value}
 					{if $value}
-						<strong>{$pref}</strong>: {$value|truncate:64:"..."}<br />
+						<strong>{$pref}</strong>: <span title="{$value}">{$value|truncate:20:"..."}</span><br />
 					{/if}
 				{/foreach}
 			</td>
@@ -163,8 +174,9 @@
 		</tr>
 	{foreachelse}
 		<tr class="norecords">
-			<td colspan="3">{tr}No Records Found{/tr}</td>
+			<td colspan="2">{tr}No Records Found{/tr}</td>
 		</tr>
 	{/foreach}
+	</tbody>
 </table>
 {/strip}
