@@ -24,8 +24,7 @@ array( 'DATADICT' => array(
 		multisite_id I4 NOTNULL PRIMARY,
 		content_id I4 NOTNULL PRIMARY
 		CONSTRAINT '
-			, CONSTRAINT `multisite_content_ref` FOREIGN KEY (`content_id`) REFERENCES `".BIT_DB_PREFIX."liberty_content`( `content_id` )
-			, CONSTRAINT `multisite_multisite_ref` FOREIGN KEY (`multisite_id`) REFERENCES `".BIT_DB_PREFIX."multisites`( `multisite_id` )'
+			, CONSTRAINT `multisite_content_ref` FOREIGN KEY (`content_id`) REFERENCES `".BIT_DB_PREFIX."liberty_content`( `content_id` ) '
 	")),
 	)),
 array( 'PHP' => "
