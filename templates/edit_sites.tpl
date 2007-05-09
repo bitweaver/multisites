@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/bitweaver/_bit_multisites/templates/edit_sites.tpl,v 1.8 2007/03/20 03:03:39 laetzer Exp $ *}
+{* $Header: /cvsroot/bitweaver/_bit_multisites/templates/edit_sites.tpl,v 1.9 2007/05/09 22:38:36 laetzer Exp $ *}
 {strip}
 {form}
 	{jstabs}
@@ -11,8 +11,7 @@
 				{formfeedback warning='If you are using the per site content feature it is recomended to add the main server here as well so that it can be selected as a site to restrict content to. All variables can be left as the default for this server.'}
 				
 				{formfeedback warning='When you change the values of these settings in the admin area of specified domains, the preferences will only apply to those domains.'}
-				{formfeedback success=$successMsg error=$errorMsg warning=$warningMsg}
-
+				
 				<div class="row">
 					{formlabel label="Server Name" for="server_name"}
 					{forminput}
@@ -114,6 +113,7 @@
 						{formlabel label=`$output.label` for=$feature}
 						{forminput}
 							{html_checkboxes name="$feature" values="y" checked=$gBitSystem->getConfig($feature) labels=false id=$feature}
+							{formhelp hash=$output}
 						{/forminput}
 					</div>
 				{/foreach}
@@ -122,6 +122,7 @@
 	{/jstabs}
 
 	<div class="row submit">
+		{formfeedback success=$successMsg error=$errorMsg warning=$warningMsg}
 		<input type="submit" name="store_server" value="{tr}Save Settings{/tr}" />
 	</div>
 
@@ -150,7 +151,7 @@
 		<tr class="{cycle values='odd,even'}">
 			<td class="server">
 				<p>
-					<a href="http://{$site.server_name|escape}">{$site.server_name|escape}</a>
+					<a href="http://{$site.server_name|escape}">{$site.server_name|escape} </a>
 					<em>{$site.description|escape}</em>
 				</p>
 				<div class="actionicon">

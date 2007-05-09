@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/bitweaver/_bit_multisites/admin/edit_sites.php,v 1.1 2006/07/10 00:32:51 nickpalmer Exp $
+// $Header: /cvsroot/bitweaver/_bit_multisites/admin/edit_sites.php,v 1.2 2007/05/09 22:38:36 laetzer Exp $
 // Copyright (c) 2005 bitweaver Multisites
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -22,18 +22,27 @@ if( !empty( $_REQUEST['ms_id'] ) && !empty( $_REQUEST['action'] ) ) {
 	}
 }
 
+
 $layoutSettings = array(
-	'site_top_bar' => array(
-		'label' => 'Top bar menu',
-	),
 	'site_top_bar_dropdown' => array(
 		'label' => 'Dropdown menu',
+		'note' => 'Use the CSS driven dropdown menus in the top bar. Compatibility and further reading can be found at <a class="external" href="http://www.htmldog.com/articles/suckerfish/dropdowns/">Suckerfish Dropdowns</a>.',
+	),
+	'site_top_bar' => array(
+		'label' => 'Top Module Area',
+		'note' => 'Check to enable the top module area site-wide.',
 	),
 	'site_right_column' => array(
-		'label' => 'Right Module Column',
+		'label' => 'Right Module Area',
+		'note' => 'Check to enable the right module area site-wide.',
 	),
 	'site_left_column' => array(
-		'label' => 'Left Module Column',
+		'label' => 'Left Module Area',
+		'note' => 'Check to enable the left module area site-wide.',
+	),
+	'site_bot_bar' => array(
+		'label' => 'Bottom Module Area',
+		'note' => 'Check to enable the bottom module area site-wide.',
 	),
 );
 $gBitSmarty->assign( 'layoutSettings',$layoutSettings );
