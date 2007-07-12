@@ -1,7 +1,7 @@
 <?php
-// $Header: /cvsroot/bitweaver/_bit_multisites/bit_setup_inc.php,v 1.9 2007/04/04 14:31:32 squareing Exp $
+// $Header: /cvsroot/bitweaver/_bit_multisites/bit_setup_inc.php,v 1.10 2007/07/12 10:40:33 squareing Exp $
 
-global $gBitSystem, $gMultisites, $gBitLanguage, $gLibertySystem;
+global $gBitSystem, $gMultisites, $gBitLanguage, $gLibertySystem, $gBitThemes;
 
 $registerHash = array(
 	'package_name' => 'multisites',
@@ -41,8 +41,8 @@ if( $gBitSystem->isPackageActive( 'multisites' ) ) {
 			if( !empty( $value ) ) {
 				$override[$pref] = $value;
 				// Style is special
-				if ($pref == "style") {
-					$gBitThemes->setStyle($value);
+				if( $pref == "style" ) {
+					$gBitThemes->setStyle( $value );
 				}
 			}
 		}
