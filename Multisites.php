@@ -3,7 +3,7 @@
 * Multisites is a package that allows multi-homing for bitweaver and restriction of content to certain sites
 *
 * @package  multisites
-* @version $Header: /cvsroot/bitweaver/_bit_multisites/Multisites.php,v 1.15 2007/03/01 17:49:28 nickpalmer Exp $
+* @version $Header: /cvsroot/bitweaver/_bit_multisites/Multisites.php,v 1.16 2007/10/25 17:14:15 nickpalmer Exp $
 * @author   xing <xing@synapse.plus.com>
 */
 
@@ -248,7 +248,7 @@ class Multisites extends BitBase {
 			}
 			$this->mDb->CompleteTrans();		
 		} else {
-			vd( $this->mErrors );
+			error_log( "Error inserting multisite restriction: " vc($this->mErrors) );
 		}
 		return( count( $this->mErrors ) == 0 );
 	}
