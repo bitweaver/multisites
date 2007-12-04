@@ -3,7 +3,7 @@
 * Multisites is a package that allows multi-homing for bitweaver and restriction of content to certain sites
 *
 * @package  multisites
-* @version $Header: /cvsroot/bitweaver/_bit_multisites/Multisites.php,v 1.16 2007/10/25 17:14:15 nickpalmer Exp $
+* @version $Header: /cvsroot/bitweaver/_bit_multisites/Multisites.php,v 1.17 2007/12/04 14:49:07 joasch Exp $
 * @author   xing <xing@synapse.plus.com>
 */
 
@@ -37,8 +37,8 @@ class Multisites extends BitBase {
 			$res = $result->fetchRow();
 			$this->mMultisiteId = $res['multisite_id'];
 			$this->mInfo = $res;
-		} 
-		
+		}
+
 		if ( @BitBase::verifyId( $this->mMultisiteId ) ) {
 			$query = "SELECT * FROM `".BIT_DB_PREFIX."multisite_preferences` WHERE `multisite_id`=?";
 			$result = $this->mDb->query( $query, array( $this->mMultisiteId ) );
@@ -67,7 +67,7 @@ class Multisites extends BitBase {
 
 		$select= "SELECT * FROM `".BIT_DB_PREFIX."multisites` ms ";
 		$query = $select.$where;
-		$result = $this->mDb->query( $query, $bindvals );		
+		$result = $this->mDb->query( $query, $bindvals );
 		while( $res = $result->fetchRow() ) {
 			$ret[$res['multisite_id']] = $res;
 		}
@@ -78,7 +78,7 @@ class Multisites extends BitBase {
 		while( $res = $result->fetchRow() ) {
 			$ret[$res['multisite_id']]['prefs'][$res['name']] = $res['pref_value'];
 		}
-		
+
 		if( !empty( $pContentId ) ) {
 			$join = " LEFT JOIN `".BIT_DB_PREFIX."multisite_content` mc ON (ms.multisite_id=mc.multisite_id)";
 			if( @BitBase::verifyId( $pContentId ) ) {
@@ -90,7 +90,7 @@ class Multisites extends BitBase {
 				}
 				$bindvals[] = $pContentId;
 			}
-			
+
 			$query = $select.$join.$where;
 			$result = $this->mDb->query( $query, $bindvals );
 			while( $res = $result->fetchRow() ) {
@@ -182,7 +182,7 @@ class Multisites extends BitBase {
 
 	/**
 	* remove server from db
-	* 
+	*
 	* @param $pMultisiteId is the id of the server we need to delete
 	* @access public
 	**/
@@ -219,7 +219,7 @@ class Multisites extends BitBase {
 
 	/**
 	* remove all preferences associated with a given server
-	* 
+	*
 	* @param $pMultisiteId is the id of the server we need to delete
 	* @access private
 	**/
@@ -231,7 +231,7 @@ class Multisites extends BitBase {
 		}
 		return $ret;
 	}
-	
+
 	/**
 	 * Store content restriction
 	 * @param $pParamHash an array of restrictions to be stored.
@@ -246,9 +246,9 @@ class Multisites extends BitBase {
 			foreach( $pParamHash['member_store'] as $item ) {
 				$result = $this->mDb->associateInsert( BIT_DB_PREFIX."multisite_content", $item );
 			}
-			$this->mDb->CompleteTrans();		
+			$this->mDb->CompleteTrans();
 		} else {
-			error_log( "Error inserting multisite restriction: " vc($this->mErrors) );
+			error_log( "Error inserting multisite restriction: " . vc($this->mErrors) );
 		}
 		return( count( $this->mErrors ) == 0 );
 	}
@@ -266,14 +266,14 @@ class Multisites extends BitBase {
 			} else {
 				$this->mErrors['store_members'] = tra( 'The multisite_id is missing.' );
 			}
-			
+
 			if( isset( $item['content_id'] ) && @BitBase::verifyId( $item['content_id'] ) ) {
 				$tmp['member_store'][$key]['content_id'] = $item['content_id'];
 			} else {
 				$this->mErrors['store_members'] = 'The content_id is not valid.';
 			}
 		}
-		
+
 		$pParamHash = $tmp;
 		return( count( $this->mErrors ) == 0 );
 	}
@@ -304,7 +304,7 @@ function multisites_content_expunge( $pObject=NULL ) {
 
 function multisites_content_preview() {
 	global $gBitSmarty, $gBitUser, $gBitSystem;
-	
+
 	if( $gBitSystem->isFeatureActive('multisites_per_site_content') && $gBitUser->hasPermission( 'p_multisites_restrict_content' )) {
 		$multisites = new Multisites();
 
@@ -322,7 +322,7 @@ function multisites_content_preview() {
 }
 
 function multisites_content_store( $pObject, $pParamHash ) {
-	global $gBitSmarty, $gBitUser, $gBitSystem;	
+	global $gBitSmarty, $gBitUser, $gBitSystem;
 
 	if( $gBitSystem->isFeatureActive('multisites_per_site_content') && $gBitUser->hasPermission( 'p_multisites_restrict_content' )) {
 		if( is_object( $pObject  ) && empty( $pParamHash['content_id'] ) ) {
