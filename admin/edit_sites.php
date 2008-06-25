@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/bitweaver/_bit_multisites/admin/edit_sites.php,v 1.2 2007/05/09 22:38:36 laetzer Exp $
+// $Header: /cvsroot/bitweaver/_bit_multisites/admin/edit_sites.php,v 1.3 2008/06/25 22:21:14 spiderr Exp $
 // Copyright (c) 2005 bitweaver Multisites
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -82,4 +82,4 @@ $gBitSmarty->assign( "styles", $styles );
 $languages = $gBitLanguage->listLanguages();
 $gBitSmarty->assign("languages",$languages );
 
-$gBitSystem->display( 'bitpackage:multisites/edit_sites.tpl', tra('Edit Sites') );
+$gBitSystem->display( 'bitpackage:multisites/edit_sites.tpl', tra('Edit Sites') , array( 'display_mode' => 'edit' ));
