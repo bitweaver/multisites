@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/bitweaver/_bit_multisites/admin/admin_multisites_inc.php,v 1.10 2007/02/24 08:51:08 squareing Exp $
+// $Header: /cvsroot/bitweaver/_bit_multisites/admin/admin_multisites_inc.php,v 1.11 2008/07/17 07:04:15 lsces Exp $
 // Copyright (c) 2005 bitweaver Sample
 // All Rights Reserved. See copyright.txt for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See license.txt for details.
@@ -32,7 +32,7 @@ if (!empty($_REQUEST['store_preferences'] )) {
 	foreach( array_keys( $multisitesSettings ) as $item ) {
 		simple_set_toggle( $item, MULTISITES_PKG_NAME );
 	}
-	simple_set_value( 'multisites_limit_member_number', PIGEONHOLES_PKG_NAME );
+	simple_set_value( 'multisites_limit_member_number', MULTISITES_PKG_NAME );
 
 	$successMsg = "The preferences were saved";
 }
