@@ -1,6 +1,6 @@
 {if $gBitSystem->isFeatureActive('multisites_per_site_content') and $gBitUser->hasPermission( 'p_multisites_restrict_content' )}
 {strip}
-{jstab title="Restrict to Sites"}
+{jstab title="Restrict"}
 	{legend legend="Restrict to Sites"}
 		<div class="row">
 			{if $multisitesList|@count ne 0}
