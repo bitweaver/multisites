@@ -1,10 +1,10 @@
-{* $Header: /cvsroot/bitweaver/_bit_multisites/templates/admin_multisites.tpl,v 1.10 2006/07/10 00:32:52 nickpalmer Exp $ *}
+{* $Header: /cvsroot/bitweaver/_bit_multisites/templates/admin_multisites.tpl,v 1.11 2008/09/03 08:05:32 laetzer Exp $ *}
 {strip}
 {form}
 	<input type="hidden" name="page" value="{$page}" />
 	{jstabs}
 		{jstab title="System Wide Settings"}
-			{formfeedback warning='Settings in this tab effect all sites.'}
+			{formfeedback warning='These settings affect all sites.'}
 			{foreach from=$multisitesSettings key=feature item=output}
 				<div class="row">
 					{formlabel label=`$output.label` for=$feature}
