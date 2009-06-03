@@ -1,4 +1,4 @@
-{if $gBitSystem->isFeatureActive('multisites_per_site_content') and $gBitUser->hasPermission( 'p_multisites_restrict_content' )}
+{if $gBitSystem->isFeatureActive('multisites_per_site_content') and ( $gBitUser->hasPermission( 'p_multisites_restrict_content' ) or $gBitUser->isRegistered() ) }
 {strip}
 <div class="row">
 	{if $multisitesList|@count ne 0}

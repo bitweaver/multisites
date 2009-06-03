@@ -3,7 +3,7 @@
 * Multisites is a package that allows multi-homing for bitweaver and restriction of content to certain sites
 *
 * @package  multisites
-* @version $Header: /cvsroot/bitweaver/_bit_multisites/Multisites.php,v 1.18 2009/06/03 05:27:15 lsces Exp $
+* @version $Header: /cvsroot/bitweaver/_bit_multisites/Multisites.php,v 1.19 2009/06/03 10:31:06 lsces Exp $
 * @author   xing <xing@synapse.plus.com>
 */
 
@@ -66,7 +66,7 @@ class Multisites extends BitBase {
 		}
 
 		$select= "SELECT * FROM `".BIT_DB_PREFIX."multisites` ms ";
-		$query = $select.$where;
+		$query = $select.$where.' ORDER BY ms.multisite_id';
 		$result = $this->mDb->query( $query, $bindvals );
 		while( $res = $result->fetchRow() ) {
 			$ret[$res['multisite_id']] = $res;
@@ -311,12 +311,15 @@ function multisites_content_display( &$pObject ) {
 }
 
 function multisites_content_edit( $pObject=NULL ) {
-	global $gBitSmarty, $gBitUser, $gBitSystem;
+	global $gBitSmarty, $gBitUser, $gBitSystem, $gMultisites;
 	$multisitesList = array();
 
 	if( $gBitSystem->isFeatureActive('multisites_per_site_content') && $gBitUser->hasPermission( 'p_multisites_restrict_content' )) {
-		$multisites = new Multisites();
-		if ($multisitesList = $multisites->getMultisites( NULL, !empty( $pObject->mContentId ) ? $pObject->mContentId : NULL )) {
+		if ($multisitesList = $gMultisites->getMultisites( NULL, !empty( $pObject->mContentId ) ? $pObject->mContentId : NULL )) {
+			$gBitSmarty->assign( 'multisitesList', $multisitesList);
+		}
+	} else if( $gBitSystem->isFeatureActive('multisites_per_site_content') && $gBitUser->isRegistered( ) && !empty($gMultisites->mMultisiteId) ) {
+		if ($multisitesList = $gMultisites->getMultisites( $gMultisites->mMultisiteId, !empty( $pObject->mContentId ) ? $pObject->mContentId : NULL )) {
 			$gBitSmarty->assign( 'multisitesList', $multisitesList);
 		}
 	}
@@ -349,7 +352,7 @@ function multisites_content_preview() {
 function multisites_content_store( $pObject, $pParamHash ) {
 	global $gBitSmarty, $gBitUser, $gBitSystem;
 
-	if( $gBitSystem->isFeatureActive('multisites_per_site_content') && $gBitUser->hasPermission( 'p_multisites_restrict_content' )) {
+	if( $gBitSystem->isFeatureActive('multisites_per_site_content') && ( $gBitUser->hasPermission( 'p_multisites_restrict_content' ) || $gBitUser->isRegistered( ) ) ) {
 		if( is_object( $pObject  ) && empty( $pParamHash['content_id'] ) ) {
 			$pParamHash['content_id'] = $pObject->mContentId;
 		}
@@ -396,18 +399,6 @@ function multisites_content_store( $pObject, $pParamHash ) {
 						die;
 					}
 				}
-			}
-		}
-	} else if( $gBitSystem->isFeatureActive('multisites_per_site_content') and $gBitUser->isRegistered() ) {
-		if( is_object( $pObject  ) && empty( $pParamHash['content_id'] ) ) {
-			$pParamHash['content_id'] = $pObject->mContentId;
-		}
-
-		if( !empty( $pParamHash['content_id'] ) ) {
-			if( !$multisites->singleSite( $pParamHash['content_id'] ) ) {
-				$gBitSmarty->assign( 'msg', tra( "There was a problem restricting the content to a single site." ) );
-				$gBitSmarty->display( 'error.tpl' );
-				die;
 			}
 		}
 	}
