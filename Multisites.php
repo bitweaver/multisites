@@ -3,7 +3,7 @@
 * Multisites is a package that allows multi-homing for bitweaver and restriction of content to certain sites
 *
 * @package  multisites
-* @version $Header: /cvsroot/bitweaver/_bit_multisites/Multisites.php,v 1.17 2007/12/04 14:49:07 joasch Exp $
+* @version $Header: /cvsroot/bitweaver/_bit_multisites/Multisites.php,v 1.18 2009/06/03 05:27:15 lsces Exp $
 * @author   xing <xing@synapse.plus.com>
 */
 
@@ -200,7 +200,8 @@ class Multisites extends BitBase {
 	/**
 	 * remove restrictions by multisite_id from db
 	 *
-	 * @param $pMultisiteId
+	 * @param $pMultisiteId If not NULL expunge all content from this site
+	 * @param $pContentId 
 	 * @access public
 	 **/
 	function expungeRestrictions( $pMultisiteId, $pContentId = NULL ) {
@@ -277,6 +278,30 @@ class Multisites extends BitBase {
 		$pParamHash = $tmp;
 		return( count( $this->mErrors ) == 0 );
 	}
+
+	/**
+	 * Store content restriction if single site update
+	 * @param $pContentId 
+	 * @return bool TRUE on success, FALSE if store could not occur. If FALSE, $this->mErrors will have reason why
+	 * @access public
+	 **/
+	function singleSite( $pContentId ) {
+		if ( !empty($pContentId) && @BitBase::verifyId( $pContentId ) ) {
+			$this->mDb->StartTrans();
+			$query = "DELETE FROM `".BIT_DB_PREFIX."multisite_content` WHERE content_id =?";
+			$ret = $this->mDb->query( $query, array( $pContentId ) );
+			$item = array(
+				'multisite_id' => $this->mMultisiteId,
+				'content_id' => $pContentId
+			);
+			$result = $this->mDb->associateInsert( BIT_DB_PREFIX."multisite_content", $item );
+			$this->mDb->CompleteTrans();
+		} else {
+			error_log( "Error inserting single site restriction: " . vc($this->mErrors) );
+		}
+		return( count( $this->mErrors ) == 0 );
+	}
+
 }
 
 // ============= SERVICE FUNCTIONS =============
@@ -371,6 +396,18 @@ function multisites_content_store( $pObject, $pParamHash ) {
 						die;
 					}
 				}
+			}
+		}
+	} else if( $gBitSystem->isFeatureActive('multisites_per_site_content') and $gBitUser->isRegistered() ) {
+		if( is_object( $pObject  ) && empty( $pParamHash['content_id'] ) ) {
+			$pParamHash['content_id'] = $pObject->mContentId;
+		}
+
+		if( !empty( $pParamHash['content_id'] ) ) {
+			if( !$multisites->singleSite( $pParamHash['content_id'] ) ) {
+				$gBitSmarty->assign( 'msg', tra( "There was a problem restricting the content to a single site." ) );
+				$gBitSmarty->display( 'error.tpl' );
+				die;
 			}
 		}
 	}
