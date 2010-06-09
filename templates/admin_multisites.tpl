@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/bitweaver/_bit_multisites/templates/admin_multisites.tpl,v 1.11 2008/09/03 08:05:32 laetzer Exp $ *}
+{* $Header$ *}
 {strip}
 {form}
 	<input type="hidden" name="page" value="{$page}" />

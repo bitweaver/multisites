@@ -3,7 +3,7 @@
 * Multisites is a package that allows multi-homing for bitweaver and restriction of content to certain sites
 *
 * @package  multisites
-* @version $Header: /cvsroot/bitweaver/_bit_multisites/Multisites.php,v 1.19 2009/06/03 10:31:06 lsces Exp $
+* @version $Header$
 * @author   xing <xing@synapse.plus.com>
 */
 

@@ -1,4 +1,4 @@
-{* $Header: /cvsroot/bitweaver/_bit_multisites/templates/edit_sites.tpl,v 1.10 2008/09/03 08:33:30 laetzer Exp $ *}
+{* $Header$ *}
 {strip}
 
 <div class="display multisites">

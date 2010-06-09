@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/bitweaver/_bit_multisites/admin/edit_sites.php,v 1.6 2010/02/08 21:27:24 wjames5 Exp $
+// $Header$
 // Copyright (c) 2005 bitweaver Multisites
 // All Rights Reserved. See below for details and a complete list of authors.
 // Licensed under the GNU LESSER GENERAL PUBLIC LICENSE. See http://www.gnu.org/copyleft/lesser.html for details.

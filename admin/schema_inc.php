@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/bitweaver/_bit_multisites/admin/schema_inc.php,v 1.10 2006/11/01 08:40:50 squareing Exp $
+// $Header$
 $tables = array(
 	'multisites' => "
 		multisite_id I4 AUTO PRIMARY,

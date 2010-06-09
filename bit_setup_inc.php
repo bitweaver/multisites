@@ -1,5 +1,5 @@
 <?php
-// $Header: /cvsroot/bitweaver/_bit_multisites/bit_setup_inc.php,v 1.10 2007/07/12 10:40:33 squareing Exp $
+// $Header$
 
 global $gBitSystem, $gMultisites, $gBitLanguage, $gLibertySystem, $gBitThemes;
 
