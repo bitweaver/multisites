@@ -22,7 +22,7 @@ class Multisites extends BitBase {
 	/**
 	* Initialisation of this class
 	*/
-	function Multisites() {
+	function __construct() {
 		parent::__construct();
 		$this->load();
 	}
