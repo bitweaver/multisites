@@ -3,12 +3,12 @@
 $tables = array(
 	'multisites' => "
 		multisite_id I4 AUTO PRIMARY,
-		server_name C(100) PRIMARY NOTNULL,
+		server_name C(100) NOTNULL PRIMARY,
 		description C(180)
 	",
 	'multisite_preferences' => "
-		multisite_id I4 NOTNULL,
-		name C(40) NOTNULL,
+		multisite_id I4 NOTNULL PRIMARY,
+		name C(40) NOTNULL PRIMARY,
 		pref_value C(250)
 	",
 	'multisite_content' => "
@@ -17,7 +17,7 @@ $tables = array(
 		CONSTRAINT '
 			, CONSTRAINT `multisite_content_ref` FOREIGN KEY (`content_id`) REFERENCES `".BIT_DB_PREFIX."liberty_content`( `content_id` )'
 	",
-	// this doesn't work and i can't figure out why
+	// this doesn't work and i can't figure out why - lsces - you can't link to just half of a primary key
 	//, CONSTRAINT `multisite_multisite_ref` FOREIGN KEY (`multisite_id`) REFERENCES `".BIT_DB_PREFIX."multisites`( `multisite_id` )'
 );
 
