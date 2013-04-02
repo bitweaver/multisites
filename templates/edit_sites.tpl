@@ -163,8 +163,8 @@
 							<em>{$site.description|escape}</em>
 						</p>
 						<div class="actionicon">
-							{smartlink ititle="edit" ibiticon="icons/accessories-text-editor" action="edit" ms_id=`$site.multisite_id` page=$page}
-							{smartlink ititle="remove" ibiticon="icons/edit-delete" action="delete" ms_id=`$site.multisite_id` page=$page}
+							{smartlink ititle="edit" booticon="icon-edit" action="edit" ms_id=`$site.multisite_id` page=$page}
+							{smartlink ititle="remove" booticon="icon-trash" action="delete" ms_id=`$site.multisite_id` page=$page}
 						</div>
 					</td>
 					<td class="settings">
