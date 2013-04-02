@@ -6,7 +6,7 @@
 		{jstab title="System Wide Settings"}
 			{formfeedback warning='These settings affect all sites.'}
 			{foreach from=$multisitesSettings key=feature item=output}
-				<div class="row">
+				<div class="control-group">
 					{formlabel label=`$output.label` for=$feature}
 					{forminput}
 						{html_checkboxes name="$feature" values="y" checked=$gBitSystem->getConfig($feature) labels=false id=$feature}
@@ -14,7 +14,7 @@
 					{/forminput}
 				</div>
 			{/foreach}
-			<div class="row">
+			<div class="control-group">
 				{formlabel label="Number of Members" for="member_number"}
 				{forminput}
 					{html_options name="multisites_limit_member_number" options=$memberLimit values=$memberLimit selected=$gBitSystem->getConfig('multisites_limit_member_number') id=member_number}
@@ -24,7 +24,7 @@
 		{/jstab}
 	{/jstabs}
 
-	<div class="row submit">
+	<div class="control-group submit">
 		<input type="submit" name="store_preferences" value="{tr}Save Settings{/tr}" />
 	</div>
 {/form}
