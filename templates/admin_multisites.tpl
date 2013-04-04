@@ -25,7 +25,7 @@
 	{/jstabs}
 
 	<div class="control-group submit">
-		<input type="submit" name="store_preferences" value="{tr}Save Settings{/tr}" />
+		<input type="submit" class="btn" name="store_preferences" value="{tr}Save Settings{/tr}" />
 	</div>
 {/form}
 {/strip}

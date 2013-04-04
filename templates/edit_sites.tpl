@@ -131,7 +131,7 @@
 		
 			<div class="control-group submit">
 				{formfeedback success=$successMsg error=$errorMsg warning=$warningMsg}
-				<input type="submit" name="store_server" value="{tr}Save Settings{/tr}" />
+				<input type="submit" class="btn" name="store_server" value="{tr}Save Settings{/tr}" />
 			</div>
 		
 			<div class="control-group">
