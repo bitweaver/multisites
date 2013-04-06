@@ -7,10 +7,10 @@
 			{formfeedback warning='These settings affect all sites.'}
 			{foreach from=$multisitesSettings key=feature item=output}
 				<div class="control-group">
-					{formlabel label=`$output.label` for=$feature}
+					{formlabel label=$output.label for=$feature}
 					{forminput}
 						{html_checkboxes name="$feature" values="y" checked=$gBitSystem->getConfig($feature) labels=false id=$feature}
-						{formhelp note=`$output.note` page=`$output.page`}
+						{formhelp note=$output.note page=$output.page}
 					{/forminput}
 				</div>
 			{/foreach}

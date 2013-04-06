@@ -118,7 +118,7 @@
 		
 						{foreach from=$layoutSettings key=feature item=output}
 							<div class="control-group">
-								{formlabel label=`$output.label` for=$feature}
+								{formlabel label=$output.label for=$feature}
 								{forminput}
 									{html_checkboxes name="$feature" values="y" checked=$gBitSystem->getConfig($feature) labels=false id=$feature}
 									{formhelp hash=$output}
@@ -155,7 +155,7 @@
 				</tr>	
 			</tfoot>
 			<tbody>
-			{foreach from=`$listMultisites` item=site}
+			{foreach from=$listMultisites item=site}
 				<tr class="{cycle values='odd,even'}">
 					<td class="server">
 						<p>
@@ -163,12 +163,12 @@
 							<em>{$site.description|escape}</em>
 						</p>
 						<div class="actionicon">
-							{smartlink ititle="edit" booticon="icon-edit" action="edit" ms_id=`$site.multisite_id` page=$page}
-							{smartlink ititle="remove" booticon="icon-trash" action="delete" ms_id=`$site.multisite_id` page=$page}
+							{smartlink ititle="edit" booticon="icon-edit" action="edit" ms_id=$site.multisite_id page=$page}
+							{smartlink ititle="remove" booticon="icon-trash" action="delete" ms_id=$site.multisite_id page=$page}
 						</div>
 					</td>
 					<td class="settings">
-						{foreach from=`$site.prefs` key=pref item=value}
+						{foreach from=$site.prefs key=pref item=value}
 							{if $value}
 								<strong>{$pref}</strong>: <span title="{$value}">{$value|truncate:20:"..."}</span><br />
 							{/if}
