@@ -139,7 +139,7 @@
 			</div>
 		{/form}
 		
-		<table class="data">
+		<table class="table data">
 			<caption>{tr}Saved Servers{/tr}</caption>
 			<thead>
 				<tr>
