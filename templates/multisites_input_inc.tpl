@@ -2,7 +2,7 @@
 {strip}
 {jstab title="Restrict"}
 	{legend legend="Restrict to Sites"}
-		<div class="control-group">
+		<div class="control-group column-group gutters">
 			{if $multisitesList|@count ne 0}
 				{formlabel label="Pick Sites" for="multisites"}
 				{forminput}
