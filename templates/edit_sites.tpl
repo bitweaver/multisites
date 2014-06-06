@@ -20,7 +20,7 @@
 						
 						{formfeedback warning='When you change the values of these settings in the admin area of specified domains, the preferences will only apply to those domains.'}
 						
-						<div class="control-group column-group gutters">
+						<div class="form-group">
 							{formlabel label="Server Name" for="server_name"}
 							{forminput}
 								<input type="text" id="server_name" name="server_name" size="50" value="{$editSite.server_name}" />
@@ -28,7 +28,7 @@
 							{/forminput}
 						</div>
 		
-						<div class="control-group column-group gutters">
+						<div class="form-group">
 							{formlabel label="Description" for="description"}
 							{forminput}
 								<textarea cols="50" rows="3" name="description" id="description">{$editSite.description|escape}</textarea>
@@ -40,35 +40,35 @@
 		
 				{jstab title="Server Settings"}
 					{legend legend="Server Settings"}
-						<div class="control-group column-group gutters">
+						<div class="form-group">
 							{formlabel label="Site Title" for="site_title"}
 							{forminput}
 								<input type="text" id="site_title" name="server_prefs[site_title]" size="50" value="{$editSite.prefs.site_title|escape}" />
 							{/forminput}
 						</div>
 		
-						<div class="control-group column-group gutters">
+						<div class="form-group">
 							{formlabel label="Site Slogan" for="site_slogan"}
 							{forminput}
 								<input type="text" id="site_slogan" name="server_prefs[site_slogan]" size="50" value="{$editSite.prefs.site_slogan|escape}" />
 							{/forminput}
 						</div>
 		
-						<div class="control-group column-group gutters">
+						<div class="form-group">
 							{formlabel label="Site Description" for="site_description"}
 							{forminput}
 								<input size="50" type="text" name="server_prefs[site_description]" id="site_description" maxlength="180" value="{$editSite.prefs.site_description|escape}" />
 							{/forminput}
 						</div>
 		
-						<div class="control-group column-group gutters">
+						<div class="form-group">
 							{formlabel label="Site Keywords" for="site_keywords"}
 							{forminput}
 								<textarea cols="50" rows="5" name="server_prefs[site_keywords]" id="site_keywords">{$editSite.prefs.site_keywords|escape}</textarea>
 							{/forminput}
 						</div>
 		
-						<div class="control-group column-group gutters">
+						<div class="form-group">
 							{formlabel label="Home page" for="bit_index"}
 							{forminput}
 								<select name="server_prefs[bit_index]" id="bit_index">
@@ -86,7 +86,7 @@
 							{/forminput}
 						</div>
 		
-						<div class="control-group column-group gutters">
+						<div class="form-group">
 							{formlabel label="URI for custom home" for="site_url_index"}
 							{forminput}
 								<input type="text" id="site_url_index" name="server_prefs[site_url_index]" value="{$editSite.prefs.site_url_index|escape}" size="50" />
@@ -97,14 +97,14 @@
 		
 				{jstab title="Look and Feel"}
 					{legend legend="Look and Feel"}
-						<div class="control-group column-group gutters">
+						<div class="form-group">
 							{formlabel label="Theme" for="style"}
 							{forminput}
 								{html_options name="server_prefs[style]" id="style" output=$styles values=$styles selected=$editSite.prefs.style}
 							{/forminput}
 						</div>
 		
-						<div class="control-group column-group gutters">
+						<div class="form-group">
 							{formlabel label="Language" for="bitlanguage"}
 							{forminput}
 								<select name="server_prefs[bitlanguage]" id="bitlanguage">
@@ -117,7 +117,7 @@
 						</div>
 		
 						{foreach from=$layoutSettings key=feature item=output}
-							<div class="control-group column-group gutters">
+							<div class="form-group">
 								{formlabel label=$output.label for=$feature}
 								{forminput}
 									{html_checkboxes name="$feature" values="y" checked=$gBitSystem->getConfig($feature) labels=false id=$feature}
@@ -129,12 +129,12 @@
 				{/jstab}
 			{/jstabs}
 		
-			<div class="control-group submit">
+			<div class="form-group submit">
 				{formfeedback success=$successMsg error=$errorMsg warning=$warningMsg}
-				<input type="submit" class="ink-button" name="store_server" value="{tr}Save Settings{/tr}" />
+				<input type="submit" class="btn btn-default" name="store_server" value="{tr}Save Settings{/tr}" />
 			</div>
 		
-			<div class="control-group column-group gutters">
+			<div class="form-group">
 				{formhelp note='Any settings that are not set here, will default back to the setting found in the <em>normal</em> administration panel.'}
 			</div>
 		{/form}

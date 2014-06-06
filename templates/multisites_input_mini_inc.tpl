@@ -1,6 +1,6 @@
 {if $gBitSystem->isFeatureActive('multisites_per_site_content') and ( $gBitUser->hasPermission( 'p_multisites_restrict_content' ) or $gBitUser->isRegistered() ) }
 {strip}
-<div class="control-group column-group gutters">
+<div class="form-group">
 	{if $multisitesList|@count ne 0}
 		{formlabel label="Restrict to Sites" for="multisites"}
 		{forminput}
